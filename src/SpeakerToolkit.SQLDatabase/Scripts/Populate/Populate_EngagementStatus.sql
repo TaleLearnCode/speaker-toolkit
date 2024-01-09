@@ -4,7 +4,10 @@ GO
 MERGE dbo.EngagementStatus AS TARGET
 USING (VALUES ( 1, 'Scheduled'),
               ( 2, 'Completed'),
-              ( 3, 'Canceled'))
+              ( 3, 'Canceled'),
+              ( 4, 'Submitted'),
+              ( 5, 'Not Selected'),
+              ( 6, 'Withdrew'))
 AS SOURCE (EngagementStatusId,
            EngagementStatusName)
 ON TARGET.EngagementStatusId = SOURCE.EngagementStatusId

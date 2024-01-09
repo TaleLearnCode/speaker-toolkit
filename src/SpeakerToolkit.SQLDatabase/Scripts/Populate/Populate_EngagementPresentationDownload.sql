@@ -18,6 +18,8 @@ USING (VALUES
               ( 10,  10, 'Slides', 'https://github.com/TaleLearnCode/TimeTravellingData/blob/main/Presentations/TimeTravellingData_BeerCityCode2022.pdf'), -- Beer City Code
               ( 11,  11, 'Slides', 'https://github.com/TaleLearnCode/TimeTravellingData/blob/main/Presentations/TimeTravellingData_KCDC2022.pdf'),         -- KCDC
               ( 12,  12, 'Slides', 'https://github.com/TaleLearnCode/TimeTravellingData/blob/main/Presentations/TimeTravellingData_PDCWinnipeg.pdf'),      -- Prairie Dev Con Winnipeg
+              (162, 162, 'Slides', 'https://github.com/TaleLearnCode/TimeTravellingData/blob/main/Presentations/TimeTravellingData_TechBash2023.pdf'),     -- TechBash 2023
+              (163, 163, 'Slides', 'https://github.com/TaleLearnCode/TimeTravellingData/blob/main/Presentations/TimeTravellingData_DevSpace2023.pdf'),     -- DevSpace 2023
 
               -- Building Microservice REST APIs using Azure Functions
               ( 13, 13, 'Slides', 'https://github.com/TaleLearnCode/BuildingMicroserviceRESTAPIsUsingAzureFunctions/blob/main/Presentations/BuildingMicroserviceRESTAPIsUsingAzureFunctions_TechBash2022.pdf'),      -- TechBash
@@ -39,18 +41,21 @@ USING (VALUES
 
               -- File New: Build a Event-Driven Architected Microservice from Scratch
               ( 25, 25, 'Available Afterwards', NULL),
+              (157, 157, 'Slides', 'https://github.com/TaleLearnCode/FileNew-EventDrivenArchitectedMicroservice/blob/main/Presentations/FileNew-EventDrivenArchitectedMicroservice_DevUp.pdf'),         -- dev up
+              (158, 158, 'Slides', 'https://github.com/TaleLearnCode/FileNew-EventDrivenArchitectedMicroservice/blob/main/Presentations/FileNew-EventDrivenArchitectedMicroservice-NebraskaCode.pdf'), -- Nebraska.Code()
 
               -- Secrets of Conflict Resolution
-              (  26, 26, 'Slides', 'https://github.com/TaleLearnCode/SecretsOfConflictResolution/blob/main/Presentations/SecretsOfConflictResolution-Nebraska2016.pdf'),                  -- Nebraska.Code()
-              (  27, 27, 'Slides', 'https://github.com/TaleLearnCode/SecretsOfConflictResolution/blob/main/Presentations/SecretsOfConflictResolution-Cincinnati2016.pdf'),                -- CINNUG
-              (  28, 28, 'Slides', 'https://github.com/TaleLearnCode/SecretsOfConflictResolution/blob/main/Presentations/SecretsOfConflictResolution-CodeStock2018.pdf'),                 -- CodeStock
-              (  29, 29, 'Slides', 'https://github.com/TaleLearnCode/SecretsOfConflictResolution/blob/main/Presentations/SecretsOfConflictResolution-MusicCity2018.pdf'),                 -- Music City Tech
-              (  30, 30, 'Slides', 'https://github.com/TaleLearnCode/SecretsOfConflictResolution/blob/main/Presentations/SecretsOfConflictResolution-BeerCityCode2019.pdf'),              -- Beer City Code
-              (  31, 31, 'Slides', 'https://github.com/TaleLearnCode/SecretsOfConflictResolution/blob/main/Presentations/SecretsOfConflictResolution-LouisvilleTechLadiesJune2019.pdf'),  -- Louisville Tech Ladies
-              (  32, 32, 'Slides', 'https://github.com/TaleLearnCode/SecretsOfConflictResolution/blob/main/Presentations/SecretsOfConflictResolution-Tulsa2022.pdf'),                     -- Tulsa .NET User Group - September 2022
-              (9032, 32, 'Recording', 'https://usergroup.tv/videos/secrets-of-conflict-resolution/'),                                                                                     -- Tulsa .NET User Group - September 2022
-              (  33, 33, 'Slides', 'https://github.com/TaleLearnCode/SecretsOfConflictResolution/blob/main/Presentations/SecretsOfConflictResolution-PDCRegina2022.pdf'),                 -- Prairie Dev Con - Regina
-              ( 135,  1, 'Available Afterwards', NULL),                                                                                                                                   -- VSLive Las Vegas 2023
+              (  26,  26, 'Slides', 'https://github.com/TaleLearnCode/SecretsOfConflictResolution/blob/main/Presentations/SecretsOfConflictResolution-Nebraska2016.pdf'),                  -- Nebraska.Code()
+              (  27,  27, 'Slides', 'https://github.com/TaleLearnCode/SecretsOfConflictResolution/blob/main/Presentations/SecretsOfConflictResolution-Cincinnati2016.pdf'),                -- CINNUG
+              (  28,  28, 'Slides', 'https://github.com/TaleLearnCode/SecretsOfConflictResolution/blob/main/Presentations/SecretsOfConflictResolution-CodeStock2018.pdf'),                 -- CodeStock
+              (  29,  29, 'Slides', 'https://github.com/TaleLearnCode/SecretsOfConflictResolution/blob/main/Presentations/SecretsOfConflictResolution-MusicCity2018.pdf'),                 -- Music City Tech
+              (  30,  30, 'Slides', 'https://github.com/TaleLearnCode/SecretsOfConflictResolution/blob/main/Presentations/SecretsOfConflictResolution-BeerCityCode2019.pdf'),              -- Beer City Code
+              (  31,  31, 'Slides', 'https://github.com/TaleLearnCode/SecretsOfConflictResolution/blob/main/Presentations/SecretsOfConflictResolution-LouisvilleTechLadiesJune2019.pdf'),  -- Louisville Tech Ladies
+              (  32,  32, 'Slides', 'https://github.com/TaleLearnCode/SecretsOfConflictResolution/blob/main/Presentations/SecretsOfConflictResolution-Tulsa2022.pdf'),                     -- Tulsa .NET User Group - September 2022
+              (9032,  32, 'Recording', 'https://usergroup.tv/videos/secrets-of-conflict-resolution/'),                                                                                     -- Tulsa .NET User Group - September 2022
+              (  33,  33, 'Slides', 'https://github.com/TaleLearnCode/SecretsOfConflictResolution/blob/main/Presentations/SecretsOfConflictResolution-PDCRegina2022.pdf'),                 -- Prairie Dev Con - Regina
+              ( 135,   1, 'Slides', 'https://github.com/TaleLearnCode/SecretsOfConflictResolution/blob/main/Presentations/TH17_SecretsOfConflictResolution.pdf'),                          -- VSLive Las Vegas 2023
+              ( 154, 154, 'Slides', 'https://github.com/TaleLearnCode/SecretsOfConflictResolution/blob/main/Presentations/SecretsOfConflictResolution-AgileAndBeyond.pdf'),                -- Agile and Beyond 2023
               
               -- Going Schema-less: How to migrate a relational database to a NoSQL database
               ( 34, 34, 'Slides', 'https://github.com/TaleLearnCode/GoingSchemaless/blob/main/presentations/GoingSchemaless_THAT.pdf'),      -- THAT
@@ -70,6 +75,8 @@ USING (VALUES
               (136, 136, 'Available Afterwards', NULL),                                                                                                             -- InflectraCon 2023
               (137, 137, 'Available Afterwards', NULL),                                                                                                             -- Orlando Code Camp
               (146, 146, 'Available Afterwards', NULL),
+              (169, 125, 'Slides', 'https://github.com/TaleLearnCode/TechnicalDebtIsNotFree/blob/main/Presentations/TechnicalDebtIsNotFree-CodeMash.pdf'),          -- CodeMash 2023
+              (170, 170, 'Slides', 'https://github.com/TaleLearnCode/TechnicalDebtIsNotFree/blob/main/Presentations/TechnicalDebtIsNotFree-TechBash.pdf'),          -- TechBash
 
               -- Ch-ch-ch-changes: Tracing Changes in Azure Cosmos DB
               ( 45, 45, 'Available Afterwards', 'https://github.com/TaleLearnCode/Ch-ch-ch-changes-Tracing-Changes-in-Azure-Cosmos-DB/blob/main/Presentations/ChChChChanges-Techbash.pdf'),             -- TechBash 2022
@@ -125,10 +132,11 @@ USING (VALUES
               ( 87, 87, 'Slides', 'https://chadgreen.blob.core.windows.net/slides/ServerlessMicroservices-MicroservicesWithoutContainers_CincyDeliver2021.pdf'),                                        -- Cincy Deliver
 
               -- How to be a Leader
-              ( 88, 88, 'Recording', 'https://usergroup.tv/videos/how-to-be-a-leader'),                                                                                                                 -- Tulsa .NET User Group
-              ( 89, 89, 'Slides', 'https://chadgreen.blob.core.windows.net/slides/How%20to%20be%20a%20Leader%20-%20Music%20City%20Tech.pdf'),                                                           -- Music City Tech
-              ( 90, 90, 'Slides', 'https://chadgreen.blob.core.windows.net/slides/How%20to%20be%20a%20Leader%20-%20Nebraska.Code().pdf'),                                                               -- Nebraska.Code
-              ( 92, 92, 'Slides', 'https://chadgreen.blob.core.windows.net/slides/How%20to%20be%20a%20Leader%20-%20CodeStock.pdf'),                                                                     -- CodeStock
+              ( 88,  88, 'Recording', 'https://usergroup.tv/videos/how-to-be-a-leader'),                                                                                                                 -- Tulsa .NET User Group
+              ( 89,  89, 'Slides', 'https://chadgreen.blob.core.windows.net/slides/How%20to%20be%20a%20Leader%20-%20Music%20City%20Tech.pdf'),                                                           -- Music City Tech
+              ( 90,  90, 'Slides', 'https://chadgreen.blob.core.windows.net/slides/How%20to%20be%20a%20Leader%20-%20Nebraska.Code().pdf'),                                                               -- Nebraska.Code
+              ( 92,  92, 'Slides', 'https://chadgreen.blob.core.windows.net/slides/How%20to%20be%20a%20Leader%20-%20CodeStock.pdf'),                                                                     -- CodeStock
+              (155, 155, 'Slides', 'https://github.com/TaleLearnCode/LeadingWithStrength/blob/main/Presentations/LeadingWithStrength_JavaScriptAndFriends.pdf'),                                         -- JavaScript and Friends
 
               -- Intro to Azure Communication Services
               ( 93, 93, 'Available Afterwards', NULL),                                                                                                                                                  -- Columbus App Dev User Group
@@ -194,12 +202,27 @@ USING (VALUES
               (147, 147, 'Availalbe Afterwards', NULL),                         -- Prairie Dev Con Winnipeg 2023
 
               -- File New: Build a Fully-Managed and Documented API
-              (148, 148, 'Availalbe Afterwards', NULL),                         -- Prairie Dev Con Winnipeg 2023
+              (148, 148, 'Slides', 'https://github.com/TaleLearnCode/FileNew-APIManagement/blob/main/Presentations/FileNew-APIManagement-PDCWinnipeg.pdf'),                         -- Prairie Dev Con Winnipeg 2023
 
               -- File New: Build a Serverless Microservice from Scratch
-              (149, 149, 'Available Afterwards', NULL)                          -- KCDC 2023
+              (149, 149, 'Available Afterwards', NULL),                         -- KCDC 2023
 
+              -- Beyond Hello World: Getting Deeper into Azure Functions
+              (153, 153, 'Slides', 'https://github.com/TaleLearnCode/BeyondHelloWorld_GettingDeeperIntoAzureFunctions/blob/main/Presentations/BeyondHelloWorld_GettingDeeperIntoAzureFunctions-BeerCityCode.pdf'),                         -- Beer City Code
+              (9154, 154, 'Slides', 'https://github.com/TaleLearnCode/BeyondHelloWorld_GettingDeeperIntoAzureFunctions/blob/main/Presentations/BeyondHelloWorld_GettingDeeperIntoAzureFunctions-PDCWinnipeg.pdf'),                          -- Prairie Dev Con Winnipeg
 
+              -- Azure: Unleashing the Power of Cloud Computing
+              (9155, 155, 'Slides', 'https://github.com/TaleLearnCode/Azure-Unleashing-the-Power-of-Cloud-Computing/blob/main/Presentations/UnleashingThePowerOfCloudComputing-Memphis.pdf'),                                               -- Memphis Azure User Group
+
+              -- Building Great Libraries
+              (160, 160, 'Slides', 'https://github.com/TaleLearnCode/BuildingGreatLibraries/blob/main/Presentations/BuildingGreatLibraries-DevSpace2023.pdf'),                                                                 -- DevSpace 2023
+              (9160, 160, 'Demo', 'https://github.com/TaleLearnCode/BuildingGreatLibraries/blob/main/Demos/MathOperations'),
+              (161, 161, 'Slides', 'https://github.com/TaleLearnCode/BuildingGreatLibraries/blob/main/Presentations/BuildingGreatLibraries-NebraskaCode2023.pdf'),                                                             -- Nebraska.Code() 2023
+              (9161, 161, 'Demo', 'https://github.com/TaleLearnCode/BuildingGreatLibraries/blob/main/Demos/MathOperations'),
+
+              -- New Horizons for C# Developers
+              (168, 168, 'Slides', 'https://github.com/TaleLearnCode/new-horizons-for-csharp-developers/blob/main/presentations/NewHorizonsForCSharpDevelopers_2023_LouDotNet.pdf'),   -- Louisville .NET Meetup - December 2023
+              (9168, 168, 'Demo', 'https://github.com/TaleLearnCode/new-horizons-for-csharp-developers/blob/main/demos')
               
               )
 AS SOURCE (EngagementPresentationDownloadId,
@@ -221,5 +244,5 @@ WHEN NOT MATCHED THEN INSERT (EngagementPresentationDownloadId,
 WHEN NOT MATCHED BY SOURCE THEN DELETE;
 GO
 
-SET IDENTITY_INSERT dbo.EngagementPresentationDownload ON
+SET IDENTITY_INSERT dbo.EngagementPresentationDownload OFF
 GO
