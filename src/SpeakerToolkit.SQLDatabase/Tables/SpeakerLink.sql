@@ -4,7 +4,8 @@
   SpeakerId     INT           NOT NULL,
   LinkType      NVARCHAR(100) NOT NULL,
   LinkUrl       NVARCHAR(200) NOT NULL,
-  CONSTRAINT pkcSpeakerLink PRIMARY KEY CLUSTERED (SpeakerLinkId)
+  CONSTRAINT pkcSpeakerLink PRIMARY KEY CLUSTERED (SpeakerLinkId),
+  CONSTRAINT fkcSpeakerLink_SpeakerId FOREIGN KEY (SpeakerId) REFERENCES dbo.Speaker (SpeakerId),
 )
 GO
 
