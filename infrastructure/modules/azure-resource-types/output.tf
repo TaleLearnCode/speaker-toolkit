@@ -31,6 +31,18 @@ output "resource_type_sql_server" {
   value = "sql"
 }
 
+output "resource_type_sql_datbase" {
+  value = "sqldb"
+}
+
 output "resource_type_api_management" {
 	value = "apim"
+}
+
+output "resource_type_app_service_plan" {
+	value = "asp"
+}
+
+output "resource_type_function_app" {
+	value = "func"
 }
