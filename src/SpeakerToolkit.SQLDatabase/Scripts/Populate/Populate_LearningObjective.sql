@@ -194,19 +194,19 @@ USING (VALUES
               
               
 AS SOURCE (LearningObjectiveId,
-           PresentationId,
+           PresentationTextId,
            SortOrder,
            LearningObjectiveText)
 ON TARGET.LearningObjectiveId = SOURCE.LearningObjectiveId
-WHEN MATCHED THEN UPDATE SET TARGET.PresentationId        = SOURCE.PresentationId,
+WHEN MATCHED THEN UPDATE SET TARGET.PresentationTextId    = SOURCE.PresentationTextId,
                              TARGET.LearningObjectiveText = SOURCE.LearningObjectiveText,
                              TARGET.SortOrder             = SOURCE.SortOrder
 WHEN NOT MATCHED THEN INSERT (LearningObjectiveId,
-                              PresentationId,
+                              PresentationTextId,
                               LearningObjectiveText,
                               SortOrder)
                       VALUES (SOURCE.LearningObjectiveId,
-                              SOURCE.PresentationId,
+                              SOURCE.PresentationTextId,
                               SOURCE.LearningObjectiveText,
                               SOURCE.SortOrder)
 WHEN NOT MATCHED BY SOURCE THEN DELETE;

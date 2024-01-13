@@ -1,6 +1,6 @@
 ﻿CREATE TABLE dbo.EngagementStatus
 (
-  EngagementStatusId INT NOT NULL IDENTITY(1,1),
+  EngagementStatusId   INT           NOT NULL IDENTITY(1,1),
   EngagementStatusName NVARCHAR(100) NOT NULL,
   CONSTRAINT pkcEngagementStatus PRIMARY KEY CLUSTERED (EngagementStatusId)
 )

@@ -74,6 +74,20 @@
     <Build Include="Tables\PresentationRelated.sql" />
     <Build Include="Tables\EngagementPresentation.sql" />
     <Build Include="Tables\EngagementPresentationDownload.sql" />
+    <Build Include="Tables\Speaker.sql" />
+    <Build Include="Tables\Language.sql" />
+    <Build Include="Tables\WorldRegion.sql" />
+    <Build Include="Tables\Country.sql" />
+    <Build Include="Tables\CountryDivision.sql" />
+    <Build Include="Tables\TimeZone.sql" />
+    <Build Include="Tables\ContentType.sql" />
+    <Build Include="Tables\SpeakerBiography.sql" />
+    <Build Include="Tables\SpeakerAwardType.sql" />
+    <Build Include="Tables\SpeakerAward.sql" />
+    <Build Include="Tables\SpeakerLink.sql" />
+    <Build Include="Tables\PresentationText.sql" />
+    <Build Include="Tables\PresentationSpeaker.sql" />
+    <Build Include="Tables\EngagementPresentationSpeaker.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Local.publish.xml" />
@@ -88,6 +102,20 @@
     <None Include="Scripts\Populate\Populate_Engagement.sql" />
     <None Include="Scripts\Populate\Populate_EngagementPresentation.sql" />
     <None Include="Scripts\Populate\Populate_EngagementPresentationDownload.sql" />
+    <None Include="Scripts\Populate\Populate_Language.sql" />
+    <None Include="Scripts\Populate\Populate_WorldRegion.sql" />
+    <None Include="Scripts\Populate\Populate_Country.sql" />
+    <None Include="Scripts\Populate\Populate_CountryDivision.sql" />
+    <None Include="Scripts\Populate\Populate_TimeZone.sql" />
+    <None Include="Scripts\Populate\Populate_ContentType.sql" />
+    <None Include="Scripts\Populate\Populate_Speaker.sql" />
+    <None Include="Scripts\Populate\Populate_SpeakerBiography.sql" />
+    <None Include="Scripts\Populate\Populate_SpeakerAwardType.sql" />
+    <None Include="Scripts\Populate\Populate_SpeakerAward.sql" />
+    <None Include="Scripts\Populate\Populate_SpeakerLink.sql" />
+    <None Include="Scripts\Populate\Populate_PresentationText.sql" />
+    <None Include="Scripts\Populate\Populate_PresentationSpeaker.sql" />
+    <None Include="Scripts\Populate\Populate_EngagementPresentationSpeaker.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

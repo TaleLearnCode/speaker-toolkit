@@ -3,7 +3,7 @@
   PresentationRelatedId INT NOT NULL IDENTITY(1,1),
   PrimaryPresentationId INT NOT NULL,
   RelatedPresentationId INT NOT NULL,
-  SortOrder INT NOT NULL,
+  SortOrder             INT NOT NULL,
   CONSTRAINT pkcPresentationRelated PRIMARY KEY CLUSTERED (PresentationRelatedId),
   CONSTRAINT fkPresentationRelated_PresentationId FOREIGN KEY (PrimaryPresentationId) REFERENCES dbo.Presentation (PresentationId),
   CONSTRAINT fkPresentationRelated_RelatedPresentationId FOREIGN KEY (RelatedPresentationId) REFERENCES dbo.Presentation (PresentationId),
