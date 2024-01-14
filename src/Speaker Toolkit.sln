@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34407.89
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SpeakerToolkit.SQLDatabase", "SpeakerToolkit.SQLDatabase\SpeakerToolkit.SQLDatabase.sqlproj", "{76C1170E-A8FF-4429-9A6C-1304D396D440}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeakerToolkit.Services", "SpeakerToolkit.Services\SpeakerToolkit.Services.csproj", "{10CC9A17-0433-4574-B4C0-F7483D1F5D0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,10 @@ Global
 		{76C1170E-A8FF-4429-9A6C-1304D396D440}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76C1170E-A8FF-4429-9A6C-1304D396D440}.Release|Any CPU.Build.0 = Release|Any CPU
 		{76C1170E-A8FF-4429-9A6C-1304D396D440}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{10CC9A17-0433-4574-B4C0-F7483D1F5D0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10CC9A17-0433-4574-B4C0-F7483D1F5D0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10CC9A17-0433-4574-B4C0-F7483D1F5D0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10CC9A17-0433-4574-B4C0-F7483D1F5D0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

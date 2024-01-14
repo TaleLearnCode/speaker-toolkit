@@ -1,0 +1,141 @@
+﻿{
+   "CodeGenerationMode": 4,
+   "ContextClassName": "SpeakerToolkitContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "TaleLearnCode.SpeakerToolkit",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[dbo].[Country]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CountryDivision]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Engagement]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[EngagementPresentation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[EngagementPresentationDownload]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[EngagementPresentationSpeaker]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[EngagementStatus]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[EngagementTag]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[EngagementType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Language]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[LearningObjective]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Presentation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PresentationRelated]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PresentationSpeaker]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PresentationTag]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PresentationText]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PresentationType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Speaker]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[SpeakerAward]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[SpeakerAwardType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[SpeakerBiography]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[SpeakerLink]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Tag]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[TimeZone]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[WorldRegion]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "..\\SpeakerToolkit.SQLDatabase\\SpeakerToolkit.SQLDatabase.sqlproj",
+   "UncountableWords": null,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDateOnlyTimeOnly": true,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false
+}
