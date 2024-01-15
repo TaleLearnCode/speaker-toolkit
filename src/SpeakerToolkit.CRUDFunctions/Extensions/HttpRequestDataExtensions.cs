@@ -31,7 +31,7 @@ public static class HttpRequestDataExtensions
 		try
 		{
 			string? httpStatus = Environment.GetEnvironmentVariable("HTTPS");
-			if (!string.IsNullOrWhiteSpace(httpStatus) && httpStatus.ToLower() == "on")
+			if (!string.IsNullOrWhiteSpace(httpStatus) && httpStatus.Equals("on", StringComparison.CurrentCultureIgnoreCase))
 				httpProtocol = "https";
 			else
 				httpProtocol = "http";
@@ -107,9 +107,10 @@ public static class HttpRequestDataExtensions
 	{
 		value = null;
 		key = key.ToLowerInvariant();
-		if (TryGetQueryStringValues(httpRequestData, out Dictionary<string, string> values) && values.ContainsKey(key))
-			value = values[key];
-		return value != null;
+		if (TryGetQueryStringValues(httpRequestData, out Dictionary<string, string> values) && values.TryGetValue(key, out value))
+			return value != null;
+		else
+			return false;
 	}
 
 	/// <summary>
@@ -136,7 +137,7 @@ public static class HttpRequestDataExtensions
 			NameValueCollection queryValues = HttpUtility.ParseQueryString(httpRequestData.Url.Query);
 			if (queryValues.Count >= 1)
 			{
-				Dictionary<string, string> result = new();
+				Dictionary<string, string> result = [];
 				foreach (string key in queryValues.Keys)
 				{
 					string? queryStringValue = queryValues[key];
@@ -146,19 +147,19 @@ public static class HttpRequestDataExtensions
 				return result;
 			}
 			else
-				return new();
+				return [];
 		}
 		else
-			return new();
+			return [];
 	}
 
 	public static bool GetBooleanQueryStringValue(this HttpRequestData httpRequestData, string key, bool defaultValue)
 	{
 		string? queryStringValue = httpRequestData.GetQueryStringValue(key);
 		if (queryStringValue is not null)
-			if (queryStringValue.ToLowerInvariant() == "true")
+			if (queryStringValue.Equals("true", StringComparison.InvariantCultureIgnoreCase))
 				return true;
-			else if (queryStringValue.ToLowerInvariant() == "false")
+			else if (queryStringValue.Equals("false", StringComparison.InvariantCultureIgnoreCase))
 				return false;
 			else
 				return defaultValue;
@@ -174,7 +175,7 @@ public static class HttpRequestDataExtensions
 		string queryString = httpRequestData.Url.Query;
 		NameValueCollection queryValues = HttpUtility.ParseQueryString(queryString);
 		bool queryValuesAvailable = (queryValues.Count == 1 && queryValues.GetKey(0) != null && queryValues?.GetKey(0)?.ToLower() != "code") || queryValues.Count > 1;
-		if (httpRequestData.Body == Stream.Null && !queryValuesAvailable && (routeValues == null || !routeValues.Any()))
+		if (httpRequestData.Body == Stream.Null && !queryValuesAvailable && (routeValues == null || routeValues.Count == 0))
 		{
 			throw new HttpRequestDataException("There are no query string values, no route values, or the request body is missing or it is unreadable.");
 		}

@@ -12,10 +12,10 @@ internal static class CountryExtensions
 			Name = country.CountryName,
 			WorldRegionCode = country.WorldRegionCode,
 			WorldRegionName = country.WorldRegion?.WorldRegionName ?? string.Empty,
-			WorldRegion = (options.IncludeWorldRegionDetails) ? country.WorldRegion.ToResponseDelete() : null,
+			WorldRegion = (options.IncludeWorldRegionDetails) ? country.WorldRegion.ToResponse() : null,
 			WorldSubregionCode = country.WorldSubregionCode,
 			WorldSubregionName = country.WorldSubregion?.WorldRegionName ?? string.Empty,
-			WorldSubregion = (options.IncludeWorldSubregionDetails) ? country.WorldSubregion.ToResponseDelete() : null,
+			WorldSubregion = (options.IncludeWorldSubregionDetails) ? country.WorldSubregion.ToResponse() : null,
 			HasDivisions = country.HasDivisions,
 			Divisions = (options.IncludeDivisions) ? country.CountryDivisions.Select(cd => cd.ToResponse(false)).ToList() : null
 		};
