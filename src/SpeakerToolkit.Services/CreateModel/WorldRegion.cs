@@ -29,7 +29,7 @@ internal static partial class CreateModel
 							.IsUnicode(false)
 							.HasComment("Name of the world region.");
 
-			entity.HasOne(d => d.Parent).WithMany(p => p.InverseParent)
+			entity.HasOne(d => d.Parent).WithMany(p => p.Subregions)
 							.HasForeignKey(d => d.ParentId)
 							.HasConstraintName("fkWorldRegion_WorldRegion");
 		});

@@ -30,11 +30,11 @@ public partial class WorldRegion
     /// </summary>
     public bool IsEnabled { get; set; }
 
-    public virtual ICollection<Country> CountryWorldRegionCodeNavigations { get; set; } = new List<Country>();
+    public virtual ICollection<Country> WorldRegionCountries { get; set; } = new List<Country>();
 
-    public virtual ICollection<Country> CountryWorldSubregionCodeNavigations { get; set; } = new List<Country>();
+    public virtual ICollection<Country> WorldSubregionCountries { get; set; } = new List<Country>();
 
-    public virtual ICollection<WorldRegion> InverseParent { get; set; } = new List<WorldRegion>();
+    public virtual ICollection<WorldRegion> Subregions { get; set; } = new List<WorldRegion>();
 
     public virtual WorldRegion Parent { get; set; }
 }

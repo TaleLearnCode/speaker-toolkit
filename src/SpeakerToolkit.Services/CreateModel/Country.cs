@@ -42,12 +42,12 @@ internal static partial class CreateModel
 							.IsFixedLength()
 							.HasComment("Identifier of the world subregion where the country is located.");
 
-			entity.HasOne(d => d.WorldRegionCodeNavigation).WithMany(p => p.CountryWorldRegionCodeNavigations)
+			entity.HasOne(d => d.WorldRegion).WithMany(p => p.WorldRegionCountries)
 							.HasForeignKey(d => d.WorldRegionCode)
 							.OnDelete(DeleteBehavior.ClientSetNull)
 							.HasConstraintName("fkCountry_WorldRegion");
 
-			entity.HasOne(d => d.WorldSubregionCodeNavigation).WithMany(p => p.CountryWorldSubregionCodeNavigations)
+			entity.HasOne(d => d.WorldSubregion).WithMany(p => p.WorldSubregionCountries)
 							.HasForeignKey(d => d.WorldSubregionCode)
 							.HasConstraintName("fkCountry_WorldSubregion");
 		});

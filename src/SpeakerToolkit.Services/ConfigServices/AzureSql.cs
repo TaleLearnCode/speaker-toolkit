@@ -14,6 +14,6 @@ public partial class ConfigServices
 	private string AzureSqlCatalog => GetConfigValue(_azureSql_Catalog);
 
 	public string AzureSqlConnectionString
-		=> $"Data Source={AzureSqlDataSource}; Initial Catalog={AzureSqlCatalog};User ID={AzureSqlUserId};Password={AzureSqlPassword};TrustServerCertificate=TrueConnection Timeout=30";
+		=> $"Data Source={AzureSqlDataSource}; Initial Catalog={AzureSqlCatalog};User ID={AzureSqlUserId};Password={AzureSqlPassword};TrustServerCertificate=True;Connection Timeout=30";
 
 }

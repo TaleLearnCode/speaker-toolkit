@@ -49,7 +49,7 @@ public partial class Country
 
     public virtual ICollection<Speaker> Speakers { get; set; } = new List<Speaker>();
 
-    public virtual WorldRegion WorldRegionCodeNavigation { get; set; }
+    public virtual WorldRegion WorldRegion { get; set; }
 
-    public virtual WorldRegion WorldSubregionCodeNavigation { get; set; }
+    public virtual WorldRegion WorldSubregion { get; set; }
 }

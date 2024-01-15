@@ -3,9 +3,20 @@ namespace TaleLearnCode.SpeakerToolkit;
 
 public partial class SpeakerToolkitContext : DbContext
 {
-	public SpeakerToolkitContext(DbContextOptions<SpeakerToolkitContext> options)
-			: base(options)
+
+	private readonly ConfigServices _configServices;
+
+	public SpeakerToolkitContext(DbContextOptions<SpeakerToolkitContext> options) : base(options) { }
+
+	public SpeakerToolkitContext(ConfigServices configServices) => _configServices = configServices;
+
+	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
+		if (!optionsBuilder.IsConfigured)
+			if (_configServices is null)
+				optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=SpeakerToolkit;Trusted_Connection=True;");
+			else
+				optionsBuilder.UseSqlServer(_configServices.AzureSqlConnectionString);
 	}
 
 	public virtual DbSet<Country> Countries { get; set; }
@@ -89,4 +100,5 @@ public partial class SpeakerToolkitContext : DbContext
 	}
 
 	partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
 }

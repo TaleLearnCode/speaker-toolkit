@@ -31,7 +31,7 @@ internal static partial class CreateModel
 							.HasComment("Name of the country using the ISO 3166-2 Subdivision Name.");
 			entity.Property(e => e.IsEnabled).HasComment("Flag indicating whether the country division record is enabled.");
 
-			entity.HasOne(d => d.CountryCodeNavigation).WithMany(p => p.CountryDivisions)
+			entity.HasOne(d => d.Country).WithMany(p => p.CountryDivisions)
 							.HasForeignKey(d => d.CountryCode)
 							.OnDelete(DeleteBehavior.ClientSetNull)
 							.HasConstraintName("fkCountryDivision_Country");
