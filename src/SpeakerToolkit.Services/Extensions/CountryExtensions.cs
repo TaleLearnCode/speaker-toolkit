@@ -17,7 +17,7 @@ internal static class CountryExtensions
 			WorldSubregionName = country.WorldSubregion?.WorldRegionName ?? string.Empty,
 			WorldSubregion = (options.IncludeWorldSubregionDetails) ? country.WorldSubregion.ToResponse() : null,
 			HasDivisions = country.HasDivisions,
-			Divisions = (options.IncludeDivisions) ? country.CountryDivisions.Select(cd => cd.ToResponse(false)).ToList() : null
+			Divisions = (options.IncludeDivisions) ? country.CountryDivisions.Select(cd => cd.ToResponse()).ToList() : null
 		};
 	}
 
