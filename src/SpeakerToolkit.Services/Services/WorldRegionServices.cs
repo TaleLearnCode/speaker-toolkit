@@ -7,7 +7,10 @@ public class WorldRegionServices(ConfigServices configServices) : ServicesBase(c
 		=> (await GetDataAsync(options)).ToResponse(options);
 
 	public async Task<WorldRegionResponse?> GetWorldRegionAsync(string worldRegionCode, GetWorldRegionOptions? options = null)
-		=> (await GetDataAsync(options, worldRegionCode)).FirstOrDefault().ToResponse(options);
+	{
+		ArgumentException.ThrowIfNullOrWhiteSpace(worldRegionCode);
+		return (await GetDataAsync(options, worldRegionCode)).FirstOrDefault().ToResponse(options);
+	}
 
 	private async Task<List<WorldRegion>> GetDataAsync(GetWorldRegionOptions? options, string? worldRegionCode = null)
 	{

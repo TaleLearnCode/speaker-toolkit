@@ -21,7 +21,14 @@ internal static class CountryExtensions
 		};
 	}
 
-	internal static List<CountryResponse?>? ToResponse(this IEnumerable<Country>? countries, GetCountryOptions options)
-		=> countries?.Select(c => c.ToResponse(options)).ToList();
+	internal static List<CountryResponse> ToResponse(this IEnumerable<Country> countries, GetCountryOptions? options)
+	{
+		List<CountryResponse?> rawResponse = countries.Select(c => c.ToResponse(options)).ToList();
+		List<CountryResponse> response = [];
+		foreach (CountryResponse? countryResponse in rawResponse)
+			if (countryResponse is not null)
+				response.Add(countryResponse);
+		return response;
+	}
 
 }

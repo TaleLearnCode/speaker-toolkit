@@ -1,7 +1,3 @@
-using System.Text.Json;
-using TaleLearnCode.SpeakerToolkit.Extensions;
-using TaleLearnCode.SpeakerToolkit.Options;
-
 namespace TaleLearnCode.SpeakerToolkit.Functions;
 
 public class WorldRegion(ILoggerFactory loggerFactory, ConfigServices configServices, JsonSerializerOptions jsonSerializerOptions)
@@ -12,7 +8,7 @@ public class WorldRegion(ILoggerFactory loggerFactory, ConfigServices configServ
 	private readonly JsonSerializerOptions _jsonSerializerOptions = jsonSerializerOptions;
 
 	[Function("GetWorldRegions")]
-	public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Function, "get", Route = "world-regions")] HttpRequestData request)
+	public async Task<HttpResponseData> GetWorldRegionsAsync([HttpTrigger(AuthorizationLevel.Function, "get", Route = "world-regions")] HttpRequestData request)
 	{
 		try
 		{

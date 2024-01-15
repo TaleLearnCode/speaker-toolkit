@@ -1,6 +1,5 @@
 ﻿using System.Collections.Specialized;
 using System.Reflection;
-using System.Text.Json;
 using System.Web;
 
 namespace TaleLearnCode.SpeakerToolkit.Extensions;
@@ -170,14 +169,21 @@ public static class HttpRequestDataExtensions
 	public static int GetInt32QueryStringValue(this HttpRequestData httpRequestData, string key, int defaultValue = 0)
 		=> int.TryParse(httpRequestData.GetQueryStringValue(key), out int result) ? result : defaultValue;
 
-	public static async Task<T> GetRequestParameters2Async<T>(this HttpRequestData httpRequestData, Dictionary<string, string> routeValues, JsonSerializerOptions jsonSerializerOptions) where T : new()
+	public static async Task<T?> GetRequestParameters2Async<T>(this HttpRequestData httpRequestData, Dictionary<string, string> routeValues, JsonSerializerOptions jsonSerializerOptions) where T : new()
 	{
+
+		Type? underlyingType = Nullable.GetUnderlyingType(typeof(T));
+		bool isNullable = underlyingType == null;
+
 		string queryString = httpRequestData.Url.Query;
 		NameValueCollection queryValues = HttpUtility.ParseQueryString(queryString);
 		bool queryValuesAvailable = (queryValues.Count == 1 && queryValues.GetKey(0) != null && queryValues?.GetKey(0)?.ToLower() != "code") || queryValues.Count > 1;
 		if (httpRequestData.Body == Stream.Null && !queryValuesAvailable && (routeValues == null || routeValues.Count == 0))
 		{
-			throw new HttpRequestDataException("There are no query string values, no route values, or the request body is missing or it is unreadable.");
+			if (isNullable)
+				return default;
+			else
+				throw new HttpRequestDataException("There are no query string values, no route values, or the request body is missing or it is unreadable.");
 		}
 
 		T? requestObject = default;
@@ -186,7 +192,10 @@ public static class HttpRequestDataExtensions
 			requestObject = await JsonSerializer.DeserializeAsync<T>(httpRequestData.Body, jsonSerializerOptions);
 			if (requestObject == null)
 			{
-				throw new HttpRequestDataException("The request body is not correctly formatted.");
+				if (isNullable)
+					return default;
+				else
+					throw new HttpRequestDataException("The request body is not correctly formatted.");
 			}
 		}
 
@@ -245,16 +254,19 @@ public static class HttpRequestDataExtensions
 
 		if (requestObject == null)
 		{
-			throw new HttpRequestDataException("The request body is not correctly formatted.");
+			if (isNullable)
+				return default;
+			else
+				throw new HttpRequestDataException("The request body is not correctly formatted.");
 		}
 
 		return requestObject;
 	}
 
-	public static async Task<T> GetRequestParameters2Async<T>(this HttpRequestData httpRequestData, JsonSerializerOptions jsonSerializerOptions) where T : new()
+	public static async Task<T?> GetRequestParameters2Async<T>(this HttpRequestData httpRequestData, JsonSerializerOptions jsonSerializerOptions) where T : new()
 		=> await httpRequestData.GetRequestParameters2Async<T>([], jsonSerializerOptions);
 
-	public static async Task<T> GetRequestParameters2Async<T>(this HttpRequestData httpRequestData) where T : new()
+	public static async Task<T?> GetRequestParameters2Async<T>(this HttpRequestData httpRequestData) where T : new()
 		=> await httpRequestData.GetRequestParameters2Async<T>([], new());
 
 }
