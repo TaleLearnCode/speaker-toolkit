@@ -48,4 +48,26 @@ public class Country(ILoggerFactory loggerFactory, ConfigServices configServices
 		}
 	}
 
+	[Function("GetCountryCountryDivisions")]
+	public async Task<HttpResponseData> GetCountryCountryDivisionsAsync(
+		[HttpTrigger(AuthorizationLevel.Function, "get", Route = "countries/{code}/divisions")] HttpRequestData request,
+		string code)
+	{
+		try
+		{
+			return await request.CreateResponseAsync(
+				await _countryServices.GetCountryDivisionsAsync(code),
+				_jsonSerializerOptions);
+		}
+		catch (ArgumentException ex)
+		{
+			return request.CreateBadRequestResponse(ex);
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, "Unhandled Exception: {errorMessage}", ex.Message);
+			return request.CreateErrorResponse(ex);
+		}
+	}
+
 }

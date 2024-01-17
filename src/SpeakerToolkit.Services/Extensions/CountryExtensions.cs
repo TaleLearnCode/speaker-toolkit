@@ -3,9 +3,8 @@
 internal static class CountryExtensions
 {
 
-	internal static CountryResponse? ToResponse(this Country? country, GetCountryOptions? options = null)
+	internal static CountryResponse? ToResponse(this Country? country, GetCountryOptions options)
 	{
-		options ??= new GetCountryOptions();
 		return country is null ? null : new()
 		{
 			Code = country.CountryCode,
@@ -18,6 +17,17 @@ internal static class CountryExtensions
 			WorldSubregion = (options.IncludeWorldSubregionDetails) ? country.WorldSubregion.ToResponse() : null,
 			HasDivisions = country.HasDivisions,
 			Divisions = (options.IncludeDivisions) ? country.CountryDivisions.Select(cd => cd.ToResponse()).ToList() : null
+		};
+	}
+
+	internal static CountryResponse? ToResponse(this Country? country)
+	{
+		return country is null ? null : new()
+		{
+			Code = country.CountryCode,
+			Name = country.CountryName,
+			HasDivisions = country.HasDivisions,
+			Divisions = country.CountryDivisions.Select(cd => cd.ToResponse()).ToList()
 		};
 	}
 

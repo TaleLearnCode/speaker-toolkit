@@ -9,7 +9,15 @@ public class CountryServices(ConfigServices configServices) : ServicesBase(confi
 	public async Task<CountryResponse?> GetCountryAsync(string countryCode, GetCountryOptions? options = null)
 	{
 		ArgumentException.ThrowIfNullOrWhiteSpace(countryCode);
+		options ??= new();
 		return (await GetDataAsync(options, countryCode)).FirstOrDefault().ToResponse(options);
+	}
+
+	public async Task<CountryResponse?> GetCountryDivisionsAsync(string countryCode)
+	{
+		ArgumentException.ThrowIfNullOrWhiteSpace(countryCode);
+		GetCountryOptions options = new() { IncludeDivisions = true };
+		return (await GetDataAsync(options, countryCode)).FirstOrDefault().ToResponse();
 	}
 
 	private async Task<List<Country>> GetDataAsync(GetCountryOptions? options, string? countryCode = null)
