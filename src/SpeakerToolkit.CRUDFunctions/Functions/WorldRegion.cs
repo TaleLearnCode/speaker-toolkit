@@ -44,4 +44,24 @@ public class WorldRegion(ILoggerFactory loggerFactory, ConfigServices configServ
 		}
 	}
 
+	[Function("GetWorldRegionCountries")]
+	public async Task<HttpResponseData> GetWorldRegionCountriesAsync(
+		[HttpTrigger(AuthorizationLevel.Function, "get", Route = "world-regions/{code}/countries")] HttpRequestData request,
+		string code)
+	{
+		try
+		{
+			return await request.CreateResponseAsync(
+				await _worldRegionServices.GetWorldRegionCountriesAsync(
+					code,
+					await request.GetRequestParameters2Async<GetWorldRegionCountriesOptions?>()),
+				_jsonSerializerOptions);
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, "Unhandled Exception: {errorMessage}", ex.Message);
+			return request.CreateErrorResponse(ex);
+		}
+	}
+
 }

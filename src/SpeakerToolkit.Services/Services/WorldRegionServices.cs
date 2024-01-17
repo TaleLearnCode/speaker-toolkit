@@ -12,7 +12,15 @@ public class WorldRegionServices(ConfigServices configServices) : ServicesBase(c
 		return (await GetDataAsync(options, worldRegionCode)).FirstOrDefault().ToResponse(options);
 	}
 
-	private async Task<List<WorldRegion>> GetDataAsync(GetWorldRegionOptions? options, string? worldRegionCode = null)
+	public async Task<WorldRegionResponse?> GetWorldRegionCountriesAsync(string worldRegionCode, GetWorldRegionCountriesOptions? options = null)
+	{
+		ArgumentException.ThrowIfNullOrWhiteSpace(worldRegionCode);
+		return (await GetDataAsync(options, worldRegionCode)).FirstOrDefault().ToResponse(options?.IncludeCountryDivisions ?? false);
+	}
+
+	private async Task<List<WorldRegion>> GetDataAsync(
+		GetWorldRegionOptions? options,
+		string? worldRegionCode = null)
 	{
 		options ??= new();
 		using SpeakerToolkitContext speakerToolkitContext = new(_configServices);
@@ -25,14 +33,40 @@ public class WorldRegionServices(ConfigServices configServices) : ServicesBase(c
 		return worldRegions;
 	}
 
+	private async Task<List<WorldRegion>> GetDataAsync(
+		GetWorldRegionCountriesOptions? options,
+		string worldRegionCode)
+	{
+		options ??= new();
+		using SpeakerToolkitContext speakerToolkitContext = new(_configServices);
+		IQueryable<WorldRegion> query = speakerToolkitContext.WorldRegions.OrderBy(x => x.WorldRegionName);
+		query = query.Where(x => x.WorldRegionCode == worldRegionCode);
+		List<WorldRegion> worldRegions = await query.ToListAsync();
+		await AddCountryDataAsync(options, speakerToolkitContext, worldRegions);
+		return worldRegions;
+	}
+
 	private static async Task AddCountryDataAsync(
 		GetWorldRegionOptions options,
 		SpeakerToolkitContext speakerToolkitContext,
 		List<WorldRegion> worldRegions)
+		=> await AddCountryDataAsync(options.IncludeCountries, options.IncludeCountryDivisions, speakerToolkitContext, worldRegions);
+
+	private static async Task AddCountryDataAsync(
+		GetWorldRegionCountriesOptions options,
+		SpeakerToolkitContext speakerToolkitContext,
+		List<WorldRegion> worldRegions)
+		=> await AddCountryDataAsync(true, options.IncludeCountryDivisions, speakerToolkitContext, worldRegions);
+
+	private static async Task AddCountryDataAsync(
+		bool includeCountries,
+		bool includeCountryDivisions,
+		SpeakerToolkitContext speakerToolkitContext,
+		List<WorldRegion> worldRegions)
 	{
-		if (options.IncludeCountries)
+		if (includeCountries)
 		{
-			if (options.IncludeCountryDivisions)
+			if (includeCountryDivisions)
 			{
 				foreach (WorldRegion worldRegion in worldRegions)
 				{

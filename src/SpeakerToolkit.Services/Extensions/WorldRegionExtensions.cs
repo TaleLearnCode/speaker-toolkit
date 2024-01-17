@@ -27,6 +27,18 @@ internal static class WorldRegionExtensions
 		return response;
 	}
 
+	internal static WorldRegionResponse? ToResponse(this WorldRegion? worldRegion, bool includeCountryDivisions)
+	{
+		return worldRegion is null ? null : new()
+		{
+			Code = worldRegion.WorldRegionCode,
+			Name = worldRegion.WorldRegionName,
+			ParentCode = worldRegion.ParentId,
+			ParentName = worldRegion.Parent?.WorldRegionName,
+			Countries = BuildCountryList(worldRegion, true, includeCountryDivisions)
+		};
+	}
+
 	private static WorldRegionResponse? ToSubregionResponse(this WorldRegion? worldSubregion, GetWorldRegionOptions options)
 	{
 		return worldSubregion is null ? null : new()
