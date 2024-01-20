@@ -3,7 +3,7 @@
 public class SpeakerAwardType(ILoggerFactory loggerFactory, ConfigServices configServices, JsonSerializerOptions jsonSerializerOptions)
 {
 
-	private readonly ILogger _logger = loggerFactory.CreateLogger<WorldRegion>();
+	private readonly ILogger _logger = loggerFactory.CreateLogger<SpeakerAwardType>();
 	private readonly SpeakerAwardTypeServices _services = new(configServices);
 	private readonly JsonSerializerOptions _jsonSerializerOptions = jsonSerializerOptions;
 
