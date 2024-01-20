@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace TaleLearnCode.SpeakerToolkit.Models;
 
 /// <summary>
-/// Contains the title and bio of a speaker in a specified langauge.
+/// Contains the title and bio of a speaker in a specified language.
 /// </summary>
 public partial class SpeakerBiography
 {
@@ -35,7 +35,7 @@ public partial class SpeakerBiography
     /// </summary>
     public string Biography { get; set; }
 
-    public virtual Language LanguageCodeNavigation { get; set; }
+    public virtual Language Language { get; set; }
 
     public virtual Speaker Speaker { get; set; }
 }

@@ -17,7 +17,7 @@ internal static class SpeakerAwardExtensions
 
 	internal static List<SpeakerAwardResponse> ToResponse(this IEnumerable<SpeakerAward> speakerAwards)
 	{
-		List<SpeakerAwardResponse> response = new();
+		List<SpeakerAwardResponse> response = [];
 		foreach (SpeakerAwardResponse? speakerAwardResponse in speakerAwards.Select(sa => sa.ToResponse()).ToList())
 			if (speakerAwardResponse is not null)
 				response.Add(speakerAwardResponse);

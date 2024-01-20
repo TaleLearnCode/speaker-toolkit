@@ -33,6 +33,7 @@ internal static class CountryExtensions
 
 	internal static List<CountryResponse> ToResponse(this IEnumerable<Country> countries, GetCountryOptions? options)
 	{
+		options ??= new();
 		List<CountryResponse?> rawResponse = countries.Select(c => c.ToResponse(options)).ToList();
 		List<CountryResponse> response = [];
 		foreach (CountryResponse? countryResponse in rawResponse)

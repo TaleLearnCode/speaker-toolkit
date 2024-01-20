@@ -29,7 +29,7 @@ internal static partial class CreateModel
 							.HasMaxLength(160)
 							.HasComment("The title for the speaker.");
 
-			entity.HasOne(d => d.LanguageCodeNavigation).WithMany(p => p.SpeakerBiographies)
+			entity.HasOne(d => d.Language).WithMany(p => p.SpeakerBiographies)
 							.HasForeignKey(d => d.LanguageCode)
 							.OnDelete(DeleteBehavior.ClientSetNull)
 							.HasConstraintName("fkSpeakerBiography_Language");
