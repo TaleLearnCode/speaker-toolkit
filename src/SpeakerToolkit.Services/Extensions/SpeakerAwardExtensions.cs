@@ -24,4 +24,10 @@ internal static class SpeakerAwardExtensions
 		return response;
 	}
 
+	internal static bool HasChanges(this SpeakerAward speakerAward, SpeakerAwardRequest request)
+		=> speakerAward.SpeakerAwardTypeId != request.SpeakerAwardTypeId
+			|| speakerAward.AwardCategory != request.AwardCategory
+			|| speakerAward.AwardYear != request.AwardYear
+			|| speakerAward.AwardProfileUrl != request.AwardProfileUrl;
+
 }

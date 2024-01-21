@@ -29,4 +29,62 @@ public class SpeakerAwardServices(ConfigServices configServices) : ServicesBase(
 		return response;
 	}
 
+	public async Task<SpeakerAwardResponse?> CreateSpeakerAwardAsync(
+		int speakerId,
+		SpeakerAwardRequest request)
+	{
+		using SpeakerToolkitContext context = new(_configServices);
+		SpeakerAward? speakerAward = new()
+		{
+			SpeakerId = speakerId,
+			SpeakerAwardTypeId = request.SpeakerAwardTypeId,
+			AwardCategory = request.AwardCategory,
+			AwardYear = request.AwardYear,
+			AwardProfileUrl = request.AwardProfileUrl
+		};
+		await context.SpeakerAwards.AddAsync(speakerAward);
+		await context.SaveChangesAsync();
+		return (await GetDataAsync(speakerId, speakerAward.SpeakerAwardId)).ToResponse();
+	}
+
+	public async Task<SpeakerAwardResponse?> UpdateSpeakerAwardAsync(
+		int speakerId,
+		int speakerAwardId,
+		SpeakerAwardRequest request)
+	{
+		using SpeakerToolkitContext context = new(_configServices);
+		SpeakerAward? speakerAward = await GetDataAsync(context, speakerId, speakerAwardId);
+		if (speakerAward is null)
+		{
+			throw new ArgumentOutOfRangeException(nameof(speakerAwardId), "Speaker Award not found.");
+		}
+		else
+		{
+			if (speakerAward.HasChanges(request))
+			{
+				speakerAward.SpeakerAwardTypeId = request.SpeakerAwardTypeId;
+				speakerAward.AwardCategory = request.AwardCategory;
+				speakerAward.AwardYear = request.AwardYear;
+				speakerAward.AwardProfileUrl = request.AwardProfileUrl;
+				await context.SaveChangesAsync();
+			}
+		}
+		return (await GetDataAsync(speakerId, speakerAwardId)).ToResponse();
+	}
+
+	private async Task<SpeakerAward?> GetDataAsync(int speakerId, int speakerAwardId)
+	{
+		using SpeakerToolkitContext context = new(_configServices);
+		return await GetDataAsync(context, speakerId, speakerAwardId);
+	}
+
+	private async Task<SpeakerAward?> GetDataAsync(
+		SpeakerToolkitContext context,
+		int speakerId,
+		int speakerAwardId)
+		=> (await context.SpeakerAwards
+		.Include(x => x.SpeakerAwardType)
+		.Include(x => x.Speaker)
+		.FirstOrDefaultAsync(x => x.SpeakerAwardId == speakerAwardId && x.SpeakerId == speakerId));
+
 }

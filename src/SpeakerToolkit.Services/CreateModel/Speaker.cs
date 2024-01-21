@@ -36,7 +36,7 @@ internal static partial class CreateModel
 							.HasMaxLength(100)
 							.IsUnicode(false);
 
-			entity.HasOne(d => d.CountryCodeNavigation).WithMany(p => p.Speakers)
+			entity.HasOne(d => d.Country).WithMany(p => p.Speakers)
 							.HasForeignKey(d => d.CountryCode)
 							.OnDelete(DeleteBehavior.ClientSetNull)
 							.HasConstraintName("fkSpeaker_Country");

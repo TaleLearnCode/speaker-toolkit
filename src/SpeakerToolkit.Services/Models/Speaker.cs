@@ -42,7 +42,7 @@ public partial class Speaker
     /// </summary>
     public string CountryDivisionCode { get; set; }
 
-    public virtual Country CountryCodeNavigation { get; set; }
+    public virtual Country Country { get; set; }
 
     public virtual CountryDivision CountryDivision { get; set; }
 
