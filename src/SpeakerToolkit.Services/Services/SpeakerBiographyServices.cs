@@ -7,16 +7,16 @@ public class SpeakerBiographyServices(ConfigServices configServices) : ServicesB
 {
 
 	public async Task<List<SpeakerBiographyResponse>> GetSpeakerBiographiesAsync(int speakerId)
-		=> (await GetData(speakerId)).ToResponse();
+		=> (await GetDataAsync(speakerId)).ToResponse();
 
 	public async Task<SpeakerBiographyResponse?> GetSpeakerBiographyAsync(int speakerId, string languageCode)
-		=> (await GetData(speakerId, languageCode)).FirstOrDefault().ToResponse();
+		=> (await GetDataAsync(speakerId, languageCode)).FirstOrDefault().ToResponse();
 
 	public async Task<UpsertResponse<SpeakerBiographyResponse?>> UpsertSpeakerBiographyAsync(
 		int speakerId,
 		string languageCode,
 		SpeakerBiographyRequest request,
-		UpsertSpeakerBiographyOptions? options = null)
+		UpsertOptions? options = null)
 	{
 		options ??= new();
 		UpsertAction upsertAction = UpsertAction.NoAction;
@@ -56,10 +56,10 @@ public class SpeakerBiographyServices(ConfigServices configServices) : ServicesB
 			throw new ObjectAlreadyExistsException($"Speaker Biography for Speaker ID {speakerId} and Language Code {languageCode} already exists.");
 		}
 		await context.SaveChangesAsync();
-		return new((await GetData(speakerId, languageCode)).First().ToResponse(), upsertAction);
+		return new((await GetDataAsync(speakerId, languageCode)).First().ToResponse(), upsertAction);
 	}
 
-	private async Task<List<SpeakerBiography>> GetData(int speakerId, string? languageCode = null)
+	private async Task<List<SpeakerBiography>> GetDataAsync(int speakerId, string? languageCode = null)
 	{
 		SpeakerToolkitContext context = new(_configServices);
 		IQueryable<SpeakerBiography> query = context.SpeakerBiographies

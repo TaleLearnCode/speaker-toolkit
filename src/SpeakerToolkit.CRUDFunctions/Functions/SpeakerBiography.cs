@@ -63,7 +63,7 @@ public class SpeakerBiography(ILoggerFactory loggerFactory, ConfigServices confi
 		HttpRequestData request,
 		int speakerId,
 		string languageCode,
-		UpsertSpeakerBiographyOptions options)
+		UpsertOptions options)
 	{
 		try
 		{
