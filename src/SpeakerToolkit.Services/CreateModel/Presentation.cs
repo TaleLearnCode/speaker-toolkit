@@ -26,11 +26,13 @@ internal static partial class CreateModel
 			entity.Property(e => e.RepoLink)
 							.HasMaxLength(200)
 							.IsUnicode(false);
-
 			entity.HasOne(d => d.PresentationType).WithMany(p => p.Presentations)
 							.HasForeignKey(d => d.PresentationTypeId)
 							.OnDelete(DeleteBehavior.ClientSetNull)
 							.HasConstraintName("fkPresentation_PresentationType");
+			entity.HasOne(d => d.DefaultLanguage).WithMany(p => p.Presentations)
+				.HasForeignKey(d => d.DefaultLanguageCode)
+				.HasConstraintName("fkPresentation_Language");
 		});
 	}
 }

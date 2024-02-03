@@ -20,6 +20,7 @@ public class SpeakerServices(ConfigServices configServices) : ServicesBase(confi
 			PublicProfileUrl = request.PublicProfileUrl,
 			CountryCode = request.CountryCode,
 			CountryDivisionCode = request.CountryDivisionCode,
+			DefaultLanguageCode = request.DefaultLanguageCode
 		};
 		await context.Speakers.AddAsync(speaker);
 		await context.SaveChangesAsync();
@@ -53,7 +54,8 @@ public class SpeakerServices(ConfigServices configServices) : ServicesBase(confi
 		using SpeakerToolkitContext context = new(_configServices);
 		IQueryable<Speaker> query = context.Speakers
 			.Include(x => x.Country)
-			.Include(x => x.CountryDivision);
+			.Include(x => x.CountryDivision)
+			.Include(x => x.DefaultLanguage);
 		if (options.GetBiographies)
 			query = query.Include(x => x.SpeakerBiographies).ThenInclude(x => x.Language);
 		if (options.GetLinks)
@@ -69,7 +71,8 @@ public class SpeakerServices(ConfigServices configServices) : ServicesBase(confi
 	{
 		IQueryable<Speaker> query = context.Speakers
 			.Include(x => x.Country)
-			.Include(x => x.CountryDivision);
+			.Include(x => x.CountryDivision)
+			.Include(x => x.DefaultLanguage);
 		if (options.GetBiographies)
 			query = query.Include(x => x.SpeakerBiographies).ThenInclude(x => x.Language);
 		if (options.GetLinks)

@@ -8,6 +8,7 @@ public class SpeakerRequest
 	public string PublicProfileUrl { get; set; } = null!;
 	public string CountryCode { get; set; } = null!;
 	public string? CountryDivisionCode { get; set; }
+	public string DefaultLanguageCode { get; set; } = null!;
 	public List<SpeakerBiographyRequest>? Biographies { get; set; }
 	public List<SpeakerLinkRequest>? Links { get; set; }
 	public List<SpeakerAwardRequest>? Awards { get; set; }

@@ -11,6 +11,8 @@ public class SpeakerResponse
 	public string CountryName { get; set; } = null!;
 	public string? CountryDivisionCode { get; set; } = string.Empty;
 	public string? CountryDivisionName { get; set; } = string.Empty;
+	public string DefaultLanguageCode { get; set; } = null!;
+	public string DefaultLanguage { get; set; } = null!;
 	public List<SpeakerBiographyResponse>? Biographies { get; set; }
 	public List<SpeakerLinkResponse>? Links { get; set; }
 	public List<SpeakerAwardResponse>? Awards { get; set; }

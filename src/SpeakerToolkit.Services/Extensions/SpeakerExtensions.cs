@@ -15,6 +15,8 @@ internal static class SpeakerExtensions
 			CountryName = speaker.Country?.CountryName ?? string.Empty,
 			CountryDivisionCode = speaker.CountryDivisionCode,
 			CountryDivisionName = speaker.CountryDivision?.CountryDivisionName ?? string.Empty,
+			DefaultLanguageCode = speaker.DefaultLanguageCode,
+			DefaultLanguage = speaker.DefaultLanguage?.LanguageName ?? string.Empty,
 			Biographies = (options.GetBiographies && speaker.SpeakerBiographies.Count != 0) ? speaker.SpeakerBiographies.ToResponse() : null,
 			Links = (options.GetLinks && speaker.SpeakerLinks.Count != 0) ? speaker.SpeakerLinks.ToResponse().ToList() : null,
 			Awards = (options.GetAwards && speaker.SpeakerAwards.Count != 0) ? speaker.SpeakerAwards.ToResponse().ToList() : null

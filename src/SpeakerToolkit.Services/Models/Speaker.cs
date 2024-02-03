@@ -10,49 +10,56 @@ namespace TaleLearnCode.SpeakerToolkit.Models;
 /// </summary>
 public partial class Speaker
 {
-    /// <summary>
-    /// The identifier of the speaker.
-    /// </summary>
-    public int SpeakerId { get; set; }
+	/// <summary>
+	/// The identifier of the speaker.
+	/// </summary>
+	public int SpeakerId { get; set; }
 
-    /// <summary>
-    /// The first name of the speaker.
-    /// </summary>
-    public string FirstName { get; set; }
+	/// <summary>
+	/// The first name of the speaker.
+	/// </summary>
+	public string FirstName { get; set; }
 
-    /// <summary>
-    /// The last name of the speaker.
-    /// </summary>
-    public string LastName { get; set; }
+	/// <summary>
+	/// The last name of the speaker.
+	/// </summary>
+	public string LastName { get; set; }
 
-    /// <summary>
-    /// Flag indicating whether the speaker profile is displayed publicly.
-    /// </summary>
-    public bool EnablePublicProfile { get; set; }
+	/// <summary>
+	/// Flag indicating whether the speaker profile is displayed publicly.
+	/// </summary>
+	public bool EnablePublicProfile { get; set; }
 
-    public string PublicProfileUrl { get; set; }
+	public string PublicProfileUrl { get; set; }
 
-    /// <summary>
-    /// Idenfiier of the country where the speaker is located.
-    /// </summary>
-    public string CountryCode { get; set; }
+	/// <summary>
+	/// Idenfiier of the country where the speaker is located.
+	/// </summary>
+	public string CountryCode { get; set; }
 
-    /// <summary>
-    /// Identifier of the country division where the speaker is located.
-    /// </summary>
-    public string CountryDivisionCode { get; set; }
+	/// <summary>
+	/// Identifier of the country division where the speaker is located.
+	/// </summary>
+	public string CountryDivisionCode { get; set; }
 
-    public virtual Country Country { get; set; }
+	/// <summary>
+	/// The default language code for the speaker.
+	/// </summary>
+	public string DefaultLanguageCode { get; set; }
 
-    public virtual CountryDivision CountryDivision { get; set; }
+	public virtual Country Country { get; set; }
 
-    public virtual ICollection<EngagementPresentationSpeaker> EngagementPresentationSpeakers { get; set; } = new List<EngagementPresentationSpeaker>();
+	public virtual CountryDivision CountryDivision { get; set; }
 
-    public virtual ICollection<PresentationSpeaker> PresentationSpeakers { get; set; } = new List<PresentationSpeaker>();
+	public virtual Language DefaultLanguage { get; set; }
 
-    public virtual ICollection<SpeakerAward> SpeakerAwards { get; set; } = new List<SpeakerAward>();
+	public virtual ICollection<EngagementPresentationSpeaker> EngagementPresentationSpeakers { get; set; } = new List<EngagementPresentationSpeaker>();
 
-    public virtual ICollection<SpeakerBiography> SpeakerBiographies { get; set; } = new List<SpeakerBiography>();
+	public virtual ICollection<PresentationSpeaker> PresentationSpeakers { get; set; } = new List<PresentationSpeaker>();
 
-    public virtual ICollection<SpeakerLink> SpeakerLinks { get; set; } = new List<SpeakerLink>();
+	public virtual ICollection<SpeakerAward> SpeakerAwards { get; set; } = new List<SpeakerAward>();
+
+	public virtual ICollection<SpeakerBiography> SpeakerBiographies { get; set; } = new List<SpeakerBiography>();
+
+	public virtual ICollection<SpeakerLink> SpeakerLinks { get; set; } = new List<SpeakerLink>();
 }

@@ -10,27 +10,29 @@ namespace TaleLearnCode.SpeakerToolkit.Models;
 /// </summary>
 public partial class Language
 {
-    /// <summary>
-    /// Identifier of the language.
-    /// </summary>
-    public string LanguageCode { get; set; }
+	/// <summary>
+	/// Identifier of the language.
+	/// </summary>
+	public string LanguageCode { get; set; }
 
-    /// <summary>
-    /// Name of the language.
-    /// </summary>
-    public string LanguageName { get; set; }
+	/// <summary>
+	/// Name of the language.
+	/// </summary>
+	public string LanguageName { get; set; }
 
-    /// <summary>
-    /// Native name of the language.
-    /// </summary>
-    public string NativeName { get; set; }
+	/// <summary>
+	/// Native name of the language.
+	/// </summary>
+	public string NativeName { get; set; }
 
-    /// <summary>
-    /// Flag indicating whether the language is enabled.
-    /// </summary>
-    public bool IsEnabled { get; set; }
+	/// <summary>
+	/// Flag indicating whether the language is enabled.
+	/// </summary>
+	public bool IsEnabled { get; set; }
 
-    public virtual ICollection<PresentationText> PresentationTexts { get; set; } = new List<PresentationText>();
+	public virtual ICollection<Presentation> Presentations { get; set; } = new List<Presentation>();
+	public virtual ICollection<PresentationText> PresentationTexts { get; set; } = new List<PresentationText>();
 
-    public virtual ICollection<SpeakerBiography> SpeakerBiographies { get; set; } = new List<SpeakerBiography>();
+	public virtual ICollection<SpeakerBiography> SpeakerBiographies { get; set; } = new List<SpeakerBiography>();
+	public virtual ICollection<Speaker> Speakers { get; set; } = new List<Speaker>();
 }

@@ -3,8 +3,8 @@
 public class PresentationTagServices(ConfigServices configServices) : ServicesBase(configServices)
 {
 
-	public async Task<TagsResponse> GetTagsAsync(int presentationId)
-		=> (await GetPresentationAsync(presentationId)).PresentationTags.ToTagsResponse();
+	public async Task<PresentationTagsResponse> GetTagsAsync(int presentationId)
+		=> (await GetPresentationAsync(presentationId)).ToPresentationTagsResponse();
 
 	public async Task AddTagToPresentation(int presentationId, string tagName)
 	{
@@ -95,6 +95,7 @@ public class PresentationTagServices(ConfigServices configServices) : ServicesBa
 		return await context.Presentations
 			.Include(x => x.PresentationTags)
 				.ThenInclude(x => x.Tag)
+			.Include(x => x.PresentationTexts)
 			.FirstOrDefaultAsync(x => x.PresentationId == presentationId)
 			?? throw new ArgumentOutOfRangeException(nameof(presentationId), "Presentation not found.");
 	}

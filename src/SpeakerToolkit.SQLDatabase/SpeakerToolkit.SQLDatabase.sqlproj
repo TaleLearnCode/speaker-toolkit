@@ -89,7 +89,6 @@
     <Build Include="Tables\EngagementPresentationSpeaker.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Local.publish.xml" />
     <None Include="Scripts\Populate\Populate_PresentationType.sql" />
     <None Include="Scripts\Populate\Populate_Presentation.sql" />
     <None Include="Scripts\Populate\Populate_Tag.sql" />
@@ -114,6 +113,7 @@
     <None Include="Scripts\Populate\Populate_PresentationText.sql" />
     <None Include="Scripts\Populate\Populate_PresentationSpeaker.sql" />
     <None Include="Scripts\Populate\Populate_EngagementPresentationSpeaker.sql" />
+    <None Include="Azure.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

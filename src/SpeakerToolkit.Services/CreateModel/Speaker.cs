@@ -35,15 +35,16 @@ internal static partial class CreateModel
 							.IsRequired()
 							.HasMaxLength(100)
 							.IsUnicode(false);
-
 			entity.HasOne(d => d.Country).WithMany(p => p.Speakers)
 							.HasForeignKey(d => d.CountryCode)
 							.OnDelete(DeleteBehavior.ClientSetNull)
 							.HasConstraintName("fkSpeaker_Country");
-
 			entity.HasOne(d => d.CountryDivision).WithMany(p => p.Speakers)
 							.HasForeignKey(d => new { d.CountryCode, d.CountryDivisionCode })
 							.HasConstraintName("fkSpeaker_CountryDivision");
+			entity.HasOne(d => d.DefaultLanguage).WithMany(p => p.Speakers)
+				.HasForeignKey(d => d.DefaultLanguageCode)
+				.HasConstraintName("fkSpeaker_Language");
 		});
 	}
 }

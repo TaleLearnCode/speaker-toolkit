@@ -10,43 +10,50 @@ namespace TaleLearnCode.SpeakerToolkit.Models;
 /// </summary>
 public partial class Presentation
 {
-    /// <summary>
-    /// The identifier of the presentation record.
-    /// </summary>
-    public int PresentationId { get; set; }
+	/// <summary>
+	/// The identifier of the presentation record.
+	/// </summary>
+	public int PresentationId { get; set; }
 
-    /// <summary>
-    /// Identifier of the type of presentation is represented.
-    /// </summary>
-    public int PresentationTypeId { get; set; }
+	/// <summary>
+	/// Identifier of the type of presentation is represented.
+	/// </summary>
+	public int PresentationTypeId { get; set; }
 
-    public string RepoLink { get; set; }
+	public string RepoLink { get; set; }
 
-    public string Permalink { get; set; }
+	public string Permalink { get; set; }
 
-    /// <summary>
-    /// Flag indicating whether the presentation has been archived.
-    /// </summary>
-    public bool IsArchived { get; set; }
+	/// <summary>
+	/// Flag indicating whether the presentation has been archived.
+	/// </summary>
+	public bool IsArchived { get; set; }
 
-    /// <summary>
-    /// Flag indicating whether the presentation is to be include in the public profile.
-    /// </summary>
-    public bool? IncludeInPublicProfile { get; set; }
+	/// <summary>
+	/// Flag indicating whether the presentation is to be include in the public profile.
+	/// </summary>
+	public bool? IncludeInPublicProfile { get; set; }
 
-    public virtual ICollection<EngagementPresentation> EngagementPresentations { get; set; } = new List<EngagementPresentation>();
+	/// <summary>
+	/// Default language code for the presentation.
+	/// </summary>
+	public string DefaultLanguageCode { get; set; }
 
-    public virtual ICollection<LearningObjective> LearningObjectives { get; set; } = new List<LearningObjective>();
+	public virtual Language DefaultLanguage { get; set; }
 
-    public virtual ICollection<PresentationRelated> PresentationRelatedPrimaryPresentations { get; set; } = new List<PresentationRelated>();
+	public virtual ICollection<EngagementPresentation> EngagementPresentations { get; set; } = new List<EngagementPresentation>();
 
-    public virtual ICollection<PresentationRelated> PresentationRelatedRelatedPresentations { get; set; } = new List<PresentationRelated>();
+	public virtual ICollection<LearningObjective> LearningObjectives { get; set; } = new List<LearningObjective>();
 
-    public virtual ICollection<PresentationSpeaker> PresentationSpeakers { get; set; } = new List<PresentationSpeaker>();
+	public virtual ICollection<PresentationRelated> PresentationRelatedPrimaryPresentations { get; set; } = new List<PresentationRelated>();
 
-    public virtual ICollection<PresentationTag> PresentationTags { get; set; } = new List<PresentationTag>();
+	public virtual ICollection<PresentationRelated> PresentationRelatedRelatedPresentations { get; set; } = new List<PresentationRelated>();
 
-    public virtual ICollection<PresentationText> PresentationTexts { get; set; } = new List<PresentationText>();
+	public virtual ICollection<PresentationSpeaker> PresentationSpeakers { get; set; } = new List<PresentationSpeaker>();
 
-    public virtual PresentationType PresentationType { get; set; }
+	public virtual ICollection<PresentationTag> PresentationTags { get; set; } = new List<PresentationTag>();
+
+	public virtual ICollection<PresentationText> PresentationTexts { get; set; } = new List<PresentationText>();
+
+	public virtual PresentationType PresentationType { get; set; }
 }
