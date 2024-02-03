@@ -7,7 +7,7 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SpeakerToolkit.SQLDatabase"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeakerToolkit.Services", "SpeakerToolkit.Services\SpeakerToolkit.Services.csproj", "{10CC9A17-0433-4574-B4C0-F7483D1F5D0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeakerToolkit.Functions", "SpeakerToolkit.Functions\SpeakerToolkit.Functions.csproj", "{DA40A90F-7370-4023-B6D2-2B33D927A9C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeakerToolkit.Functions", "SpeakerToolkit.Functions\SpeakerToolkit.Functions.csproj", "{DA40A90F-7370-4023-B6D2-2B33D927A9C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

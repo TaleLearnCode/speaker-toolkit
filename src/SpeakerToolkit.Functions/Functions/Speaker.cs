@@ -14,9 +14,7 @@ public class Speaker(ILoggerFactory loggerFactory, ConfigServices configServices
 	{
 		try
 		{
-
 			GetSpeakerOptions? options = await request.GetRequestParameters2Async<GetSpeakerOptions?>();
-
 			return await request.CreateResponseAsync(
 				await _services.GetSpeakerAsync(
 					speakerId,
@@ -32,7 +30,7 @@ public class Speaker(ILoggerFactory loggerFactory, ConfigServices configServices
 
 	[Function("CreateSpeaker")]
 	public async Task<HttpResponseData> CreateSpeakerAsync(
-				[HttpTrigger(AuthorizationLevel.Function, "post", Route = "speakers")] HttpRequestData request)
+		[HttpTrigger(AuthorizationLevel.Function, "post", Route = "speakers")] HttpRequestData request)
 	{
 		try
 		{

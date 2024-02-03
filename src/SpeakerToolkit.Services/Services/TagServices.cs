@@ -33,6 +33,24 @@ public class TagServices(ConfigServices configServices) : ServicesBase(configSer
 		return tag.ToResponse();
 	}
 
+	internal static async Task<Tag?> GetTagAsync(SpeakerToolkitContext context, string tagName)
+	=> await context.Tags.FirstOrDefaultAsync(x => x.TagName == tagName);
+
+	internal static async Task<Tag> GetOrCreateAsync(SpeakerToolkitContext context, string tagName)
+	{
+		Tag? tag = await GetTagAsync(context, tagName);
+		if (tag is null)
+		{
+			tag = new()
+			{
+				TagName = tagName
+			};
+			await context.Tags.AddAsync(tag);
+			await context.SaveChangesAsync();
+		}
+		return tag;
+	}
+
 	private async Task<List<Tag>> GetDatAsync(int? id = null)
 	{
 		using var context = new SpeakerToolkitContext(_configServices);

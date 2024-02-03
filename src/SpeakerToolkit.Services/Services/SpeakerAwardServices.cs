@@ -78,7 +78,7 @@ public class SpeakerAwardServices(ConfigServices configServices) : ServicesBase(
 		return await GetDataAsync(context, speakerId, speakerAwardId);
 	}
 
-	private async Task<SpeakerAward?> GetDataAsync(
+	private static async Task<SpeakerAward?> GetDataAsync(
 		SpeakerToolkitContext context,
 		int speakerId,
 		int speakerAwardId)

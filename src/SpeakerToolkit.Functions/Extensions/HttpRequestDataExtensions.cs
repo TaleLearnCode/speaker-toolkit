@@ -1,7 +1,5 @@
-﻿using Microsoft.Azure.Functions.Worker.Http;
-using System.Collections.Specialized;
+﻿using System.Collections.Specialized;
 using System.Reflection;
-using System.Text.Json;
 using System.Web;
 
 namespace TaleLearnCode.SpeakerToolkit.Extensions;
@@ -270,5 +268,10 @@ public static class HttpRequestDataExtensions
 
 	public static async Task<T?> GetRequestParameters2Async<T>(this HttpRequestData httpRequestData) where T : new()
 		=> await httpRequestData.GetRequestParameters2Async<T>([], new());
+
+	public static HttpResponseData CreateOkResponse(this HttpRequestData httpRequestData, string? bodyText = null)
+	{
+		return httpRequestData.CreateResponse(HttpStatusCode.OK, bodyText ?? string.Empty);
+	}
 
 }
