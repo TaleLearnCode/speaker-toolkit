@@ -3,6 +3,8 @@
 public class PresentationServices(ConfigServices configServices) : ServicesBase(configServices)
 {
 
+	#region Related Presentations
+
 	public async Task<RelatedPresentationsResponse> GetRelatedPresentationsAsync(int presentationId, string? languageCode = null)
 		=> (await GetPresentationAsync(
 			new()
@@ -55,6 +57,79 @@ public class PresentationServices(ConfigServices configServices) : ServicesBase(
 		}
 		return presentation.ToRelatedPresentationsResponse();
 	}
+
+	#endregion
+
+	#region Presentation Texts
+
+	public async Task<PresentationTextResponse> GetPresentationTextAsync(int presentationId, string? languageCode = null)
+	{
+		Presentation presentation = await GetPresentationAsync(new() { PresentationId = presentationId, IncludePresentationTexts = true });
+		return presentation.PresentationTexts.FirstOrDefault(x => x.LanguageCode == languageCode)
+			?.ToPresentationTextResponse()
+			?? presentation.PresentationTexts.FirstOrDefault(x => x.LanguageCode == presentation.DefaultLanguageCode)
+				?.ToPresentationTextResponse()
+			?? presentation.PresentationTexts.FirstOrDefault()
+				?.ToPresentationTextResponse()
+			?? throw new ArgumentOutOfRangeException(nameof(presentationId), "Presentation text not found.");
+	}
+
+	public async Task<List<PresentationTextResponse>> GetPresentationTextsAsync(int presentationId)
+	{
+		Presentation presentation = await GetPresentationAsync(new() { PresentationId = presentationId, IncludePresentationTexts = true });
+		return presentation.PresentationTexts.ToPresentationTextResponseList();
+	}
+
+	public async Task AddPresentationTextAsync(int presentationId, string languageCode, PresentationTextRequest request)
+	{
+		using SpeakerToolkitContext context = new(_configServices);
+		Presentation presentation = await GetPresentationAsync(new() { PresentationId = presentationId, IncludePresentationTexts = true }, context, nameof(presentationId));
+		PresentationText? presentationText = presentation.PresentationTexts.FirstOrDefault(x => x.LanguageCode.Equals(languageCode, StringComparison.InvariantCultureIgnoreCase));
+		if (presentationText is not null) throw new ObjectAlreadyExistsException($"Presentation text for language code '{languageCode}' already exists for presentation {presentationId}.");
+		presentationText = new()
+		{
+			PresentationId = presentationId,
+			LanguageCode = languageCode,
+			PresentationTitle = request.Title,
+			PresentationShortTitle = request.ShortTitle,
+			Abstract = request.Abstract,
+			ShortAbstract = request.ShortAbstract,
+			Summary = request.Summary,
+			AdditionalDetails = request.AdditionalDetails
+		};
+		context.PresentationTexts.Add(presentationText);
+		await context.SaveChangesAsync();
+	}
+
+	public async Task UpdatePresentationTextAsync(int presentationId, string languageCode, PresentationTextRequest request)
+	{
+		using SpeakerToolkitContext context = new(_configServices);
+		Presentation presentation = await GetPresentationAsync(new() { PresentationId = presentationId, IncludePresentationTexts = true }, context, nameof(presentationId));
+		PresentationText? presentationText = presentation.PresentationTexts.FirstOrDefault(x => x.LanguageCode.Equals(languageCode, StringComparison.InvariantCultureIgnoreCase))
+			?? throw new ArgumentOutOfRangeException(nameof(languageCode), "Presentation text not found.");
+		presentationText.PresentationTitle = request.Title;
+		presentationText.PresentationShortTitle = request.ShortTitle;
+		presentationText.Abstract = request.Abstract;
+		presentationText.ShortAbstract = request.ShortAbstract;
+		presentationText.Summary = request.Summary;
+		presentationText.AdditionalDetails = request.AdditionalDetails;
+		await context.SaveChangesAsync();
+	}
+
+	public async Task RemovePresentationTextAsync(int presentationId, string languageCode)
+	{
+		using SpeakerToolkitContext context = new(_configServices);
+		Presentation presentation = await GetPresentationAsync(new() { PresentationId = presentationId, IncludePresentationTexts = true }, context, nameof(presentationId));
+		PresentationText? presentationText = presentation.PresentationTexts.FirstOrDefault(x => x.LanguageCode.Equals(languageCode, StringComparison.InvariantCultureIgnoreCase))
+			?? throw new ArgumentOutOfRangeException(nameof(languageCode), "Presentation text not found.");
+		if (presentation.PresentationTexts.Count == 1)
+			throw new InvalidOperationException("Cannot remove the only presentation text for a presentation.");
+		context.PresentationTexts.Remove(presentationText);
+		await context.SaveChangesAsync();
+	}
+
+	#endregion
+
 
 	private async Task<Presentation> GetPresentationWithRelatedPresentationsAsync(int presentationId)
 	{

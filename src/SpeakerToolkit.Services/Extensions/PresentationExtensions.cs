@@ -40,4 +40,20 @@ internal static class PresentationExtensions
 			RelatedPresentations = presentation.RelatedPresentations.OrderBy(x => x.SortOrder).Select(x => x.RelatedPresentation.ToPresentationListItemResponse(languageCode)).ToList()
 		};
 
+	internal static PresentationTextResponse ToPresentationTextResponse(this PresentationText presentationText)
+		=> new()
+		{
+			PresentationId = presentationText.PresentationId,
+			LanguageCode = presentationText.LanguageCode,
+			Title = presentationText.PresentationTitle,
+			ShortTitle = presentationText.PresentationShortTitle,
+			Abstract = presentationText.Abstract,
+			ShortAbstract = presentationText.ShortAbstract,
+			Summary = presentationText.Summary,
+			AdditionalDetails = presentationText.AdditionalDetails
+		};
+
+	internal static List<PresentationTextResponse> ToPresentationTextResponseList(this ICollection<PresentationText> presentationTexts)
+		=> presentationTexts.Select(x => x.ToPresentationTextResponse()).ToList();
+
 }
