@@ -10,4 +10,5 @@ public class PresentationTextResponse
 	public string? ShortAbstract { get; set; }
 	public string? Summary { get; set; }
 	public string? AdditionalDetails { get; set; }
+	public List<LearningObjectiveResponse> LearningObjectives { get; set; } = [];
 }

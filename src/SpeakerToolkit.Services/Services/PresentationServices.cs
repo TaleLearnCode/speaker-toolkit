@@ -130,21 +130,108 @@ public class PresentationServices(ConfigServices configServices) : ServicesBase(
 
 	#endregion
 
+	#region Learning Objectives
 
-	private async Task<Presentation> GetPresentationWithRelatedPresentationsAsync(int presentationId)
+	public async Task<LearningObjectiveResponse> GetLearningObjectiveAsync(int presentationId, string languageCode, int sortOrder)
 	{
-		using SpeakerToolkitContext context = new(_configServices);
-		return await GetPresentationWithRelatedPresentationsAsync(presentationId, context);
+		Presentation presentation = await GetPresentationAsync(new() { PresentationId = presentationId, IncludePresentationTexts = true });
+		PresentationText? presentationText = presentation.PresentationTexts
+			.FirstOrDefault(x => x.LanguageCode.Equals(languageCode, StringComparison.InvariantCultureIgnoreCase))
+			?? throw new ArgumentOutOfRangeException(nameof(languageCode), $"There are no {languageCode} learning objectives for presentation {presentationId}.");
+		return presentationText
+			.LearningObjectives.FirstOrDefault(x => x.SortOrder == sortOrder)?
+			.ToResponse(presentationText)
+			?? throw new ArgumentOutOfRangeException(nameof(sortOrder), "Learning objective not found.");
 	}
 
-	private static async Task<Presentation> GetPresentationWithRelatedPresentationsAsync(int presentationId, SpeakerToolkitContext context)
-		=> await context.Presentations
-		.Include(x => x.PresentationTexts)
-		.Include(x => x.RelatedPresentations)
-			.ThenInclude(x => x.RelatedPresentation)
-				.ThenInclude(x => x.PresentationTexts)
-		.FirstOrDefaultAsync(x => x.PresentationId == presentationId)
-		?? throw new ArgumentOutOfRangeException(nameof(presentationId), "Presentation not found.");
+	public async Task<LearningObjectivesResponse> GetLearningObjectivesAsync(int presentationId, string languageCode)
+	{
+		Presentation presentation = await GetPresentationAsync(new() { PresentationId = presentationId, IncludePresentationTexts = true });
+		PresentationText? presentationText = presentation.PresentationTexts
+			.FirstOrDefault(x => x.LanguageCode.Equals(languageCode, StringComparison.InvariantCultureIgnoreCase))
+			?? throw new ArgumentOutOfRangeException(nameof(languageCode), $"There are no {languageCode} learning objectives for presentation {presentationId}.");
+		return presentationText.ToLearningObjectivesResponse(true);
+	}
+
+	public async Task<LearningObjectiveResponse> AddLearningObjectiveAsync(
+		int presentationId,
+		string languageCode,
+		string learningObjectiveText,
+		int? sortOrder = null)
+	{
+		using SpeakerToolkitContext context = new(_configServices);
+		Presentation presentation = await GetPresentationAsync(new() { PresentationId = presentationId, IncludePresentationTexts = true }, context);
+		PresentationText presentationText = presentation.PresentationTexts
+			.FirstOrDefault(x => x.LanguageCode.Equals(languageCode, StringComparison.InvariantCultureIgnoreCase))
+			?? throw new ArgumentOutOfRangeException(nameof(languageCode), $"There are no {languageCode} learning objectives for presentation {presentationId}.");
+		LearningObjective? learningObjective = presentationText.LearningObjectives.FirstOrDefault(x => x.LearningObjectiveText.Equals(learningObjectiveText, StringComparison.InvariantCultureIgnoreCase));
+		if (learningObjective is not null && (learningObjective.SortOrder == sortOrder || !sortOrder.HasValue))
+			throw new ObjectAlreadyExistsException($"Learning objective '{learningObjectiveText}' already exists for presentation {presentationId}.");
+		UpdateLearningObjectiveSortOrders(sortOrder, presentationText);
+		if (learningObjective is not null)
+		{
+			learningObjective.SortOrder = sortOrder ?? learningObjective.SortOrder;
+		}
+		else
+		{
+			learningObjective = new()
+			{
+				LearningObjectiveText = learningObjectiveText,
+				SortOrder = sortOrder ?? presentationText.LearningObjectives.Max(x => x.SortOrder) + 1
+			};
+			presentationText.LearningObjectives.Add(learningObjective);
+		}
+		await context.SaveChangesAsync();
+		return learningObjective.ToResponse(presentationText);
+	}
+
+	public async Task<LearningObjectiveResponse> UpdateLearningObjectiveAsync(
+		int presentationId,
+		string languageCode,
+		int sortOrder,
+		string learningObjectiveText,
+		int? newSortOrder = null)
+	{
+		using SpeakerToolkitContext context = new(_configServices);
+		Presentation presentation = await GetPresentationAsync(new() { PresentationId = presentationId, IncludePresentationTexts = true }, context);
+		PresentationText presentationText = presentation.PresentationTexts
+			.FirstOrDefault(x => x.LanguageCode.Equals(languageCode, StringComparison.InvariantCultureIgnoreCase))
+			?? throw new ArgumentOutOfRangeException(nameof(languageCode), $"There are no {languageCode} learning objectives for presentation {presentationId}.");
+		LearningObjective learningObjective = presentationText.LearningObjectives.FirstOrDefault(x => x.SortOrder == sortOrder)
+			?? throw new ArgumentOutOfRangeException(nameof(sortOrder), $"The specified learning objective does not exist.");
+		if (learningObjective.SortOrder != newSortOrder)
+		{
+			UpdateLearningObjectiveSortOrders(newSortOrder, presentationText);
+			learningObjective.SortOrder = newSortOrder ?? learningObjective.SortOrder;
+		}
+		learningObjective.LearningObjectiveText = learningObjectiveText;
+		await context.SaveChangesAsync();
+		return learningObjective.ToResponse(presentationText);
+	}
+
+	public async Task RemoveLearningObjectiveAsync(int presentationId, string languageCode, int sortOrder)
+	{
+		using SpeakerToolkitContext context = new(_configServices);
+		Presentation presentation = await GetPresentationAsync(new() { PresentationId = presentationId, IncludePresentationTexts = true }, context);
+		PresentationText presentationText = presentation.PresentationTexts
+			.FirstOrDefault(x => x.LanguageCode.Equals(languageCode, StringComparison.InvariantCultureIgnoreCase))
+			?? throw new ArgumentOutOfRangeException(nameof(languageCode), $"There are no {languageCode} learning objectives for presentation {presentationId}.");
+		LearningObjective learningObjective = presentationText.LearningObjectives.FirstOrDefault(x => x.SortOrder == sortOrder)
+			?? throw new ArgumentOutOfRangeException(nameof(sortOrder), $"The specified learning objective does not exist.");
+		context.LearningObjectives.Remove(learningObjective);
+
+
+		await context.SaveChangesAsync();
+	}
+
+	private static void UpdateLearningObjectiveSortOrders(int? sortOrder, PresentationText presentationText)
+	{
+		if (sortOrder.HasValue && presentationText.LearningObjectives.Any(x => x.SortOrder == sortOrder))
+			foreach (LearningObjective existingLearningObjective in presentationText.LearningObjectives.Where(x => x.SortOrder >= sortOrder.Value))
+				existingLearningObjective.SortOrder++;
+	}
+
+	#endregion
 
 	private async Task<Presentation> GetPresentationAsync(
 		GetPresentationOptions options,
@@ -174,7 +261,8 @@ public class PresentationServices(ConfigServices configServices) : ServicesBase(
 	{
 		IQueryable<Presentation> query = context.Presentations;
 		if (options.IncludePresentationTexts)
-			query = query.Include(x => x.PresentationTexts);
+			query = query.Include(x => x.PresentationTexts)
+				.ThenInclude(x => x.LearningObjectives);
 		if (options.IncludeRelatedPresentations)
 			query = query.Include(x => x.RelatedPresentations)
 				.ThenInclude(x => x.RelatedPresentation)

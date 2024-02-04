@@ -10,46 +10,47 @@ namespace TaleLearnCode.SpeakerToolkit.Models;
 /// </summary>
 public partial class PresentationText
 {
-    /// <summary>
-    /// The identifier of the presentation text record.
-    /// </summary>
-    public int PresentationTextId { get; set; }
+	/// <summary>
+	/// The identifier of the presentation text record.
+	/// </summary>
+	public int PresentationTextId { get; set; }
 
-    /// <summary>
-    /// The identifier of the associated presentation.
-    /// </summary>
-    public int PresentationId { get; set; }
+	/// <summary>
+	/// The identifier of the associated presentation.
+	/// </summary>
+	public int PresentationId { get; set; }
 
-    public string LanguageCode { get; set; }
+	public string LanguageCode { get; set; }
 
-    /// <summary>
-    /// The full title of the presentation.
-    /// </summary>
-    public string PresentationTitle { get; set; }
+	/// <summary>
+	/// The full title of the presentation.
+	/// </summary>
+	public string PresentationTitle { get; set; }
 
-    /// <summary>
-    /// The short title of the presentation.
-    /// </summary>
-    public string PresentationShortTitle { get; set; }
+	/// <summary>
+	/// The short title of the presentation.
+	/// </summary>
+	public string PresentationShortTitle { get; set; }
 
-    /// <summary>
-    /// The full abstract for the presentation.
-    /// </summary>
-    public string Abstract { get; set; }
+	/// <summary>
+	/// The full abstract for the presentation.
+	/// </summary>
+	public string Abstract { get; set; }
 
-    /// <summary>
-    /// The short abstract for the presentation.
-    /// </summary>
-    public string ShortAbstract { get; set; }
+	/// <summary>
+	/// The short abstract for the presentation.
+	/// </summary>
+	public string ShortAbstract { get; set; }
 
-    /// <summary>
-    /// The summary for the presentation.
-    /// </summary>
-    public string Summary { get; set; }
+	/// <summary>
+	/// The summary for the presentation.
+	/// </summary>
+	public string Summary { get; set; }
 
-    public string AdditionalDetails { get; set; }
+	public string AdditionalDetails { get; set; }
 
-    public virtual Language LanguageCodeNavigation { get; set; }
+	public virtual Language Language { get; set; }
 
-    public virtual Presentation Presentation { get; set; }
+	public virtual Presentation Presentation { get; set; }
+	public virtual ICollection<LearningObjective> LearningObjectives { get; set; } = new List<LearningObjective>();
 }

@@ -4,6 +4,8 @@ namespace TaleLearnCode.SpeakerToolkit;
 public partial class SpeakerToolkitContext : DbContext
 {
 
+	public SpeakerToolkitContext() { }
+
 	private readonly ConfigServices _configServices;
 
 	public SpeakerToolkitContext(DbContextOptions<SpeakerToolkitContext> options) : base(options) { }

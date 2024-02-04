@@ -32,6 +32,7 @@ internal static partial class CreateModel
 							.HasConstraintName("fkPresentation_PresentationType");
 			entity.HasOne(d => d.DefaultLanguage).WithMany(p => p.Presentations)
 				.HasForeignKey(d => d.DefaultLanguageCode)
+				.OnDelete(DeleteBehavior.ClientSetNull)
 				.HasConstraintName("fkPresentation_Language");
 		});
 	}

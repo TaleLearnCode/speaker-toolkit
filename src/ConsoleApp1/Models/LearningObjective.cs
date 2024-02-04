@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace TaleLearnCode.SpeakerToolkit.Models;
+namespace ConsoleApp1.Models;
 
 /// <summary>
 /// Represents a learning objective of a presentation.

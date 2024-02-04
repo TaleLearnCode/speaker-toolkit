@@ -114,6 +114,7 @@
     <None Include="Scripts\Populate\Populate_PresentationSpeaker.sql" />
     <None Include="Scripts\Populate\Populate_EngagementPresentationSpeaker.sql" />
     <None Include="Azure.publish.xml" />
+    <None Include="Local.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

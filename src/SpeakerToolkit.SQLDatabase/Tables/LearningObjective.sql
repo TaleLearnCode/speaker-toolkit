@@ -5,7 +5,8 @@
   LearningObjectiveText NVARCHAR(300) NOT NULL,
   SortOrder             INT NOT NULL,
   CONSTRAINT pkcLearningObjective PRIMARY KEY CLUSTERED (LearningObjectiveId),
-  CONSTRAINT fkLearningObjective_PresentationText FOREIGN KEY (PresentationTextId) REFERENCES dbo.Presentation (PresentationId)
+  CONSTRAINT fkLearningObjective_PresentationText FOREIGN KEY (PresentationTextId) REFERENCES dbo.PresentationText (PresentationTextId),
+  CONSTRAINT ucLearningObjective UNIQUE (PresentationTextId, SortOrder)
 )
 GO
 

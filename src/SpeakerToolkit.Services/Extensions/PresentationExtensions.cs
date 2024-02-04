@@ -50,7 +50,8 @@ internal static class PresentationExtensions
 			Abstract = presentationText.Abstract,
 			ShortAbstract = presentationText.ShortAbstract,
 			Summary = presentationText.Summary,
-			AdditionalDetails = presentationText.AdditionalDetails
+			AdditionalDetails = presentationText.AdditionalDetails,
+			LearningObjectives = presentationText.LearningObjectives.Select(x => x.ToResponse()).ToList()
 		};
 
 	internal static List<PresentationTextResponse> ToPresentationTextResponseList(this ICollection<PresentationText> presentationTexts)
