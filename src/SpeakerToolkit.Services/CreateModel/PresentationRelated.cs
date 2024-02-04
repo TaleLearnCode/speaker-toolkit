@@ -12,12 +12,12 @@ internal static partial class CreateModel
 
 			entity.HasIndex(e => new { e.PrimaryPresentationId, e.RelatedPresentationId }, "unqPresentationRelated_PresentationId_RelatedPresentationId").IsUnique();
 
-			entity.Property(e => e.PresentationRelatedId).HasComment("The identifier of the releated presentation object.");
+			entity.Property(e => e.PresentationRelatedId).HasComment("The identifier of the related presentation object.");
 			entity.Property(e => e.PrimaryPresentationId).HasComment("The identifier of the primary presentation.");
 			entity.Property(e => e.RelatedPresentationId).HasComment("The identifier of the related presentation.");
 			entity.Property(e => e.SortOrder).HasComment("The sorting order of the related presentation.");
 
-			entity.HasOne(d => d.PrimaryPresentation).WithMany(p => p.PresentationRelatedPrimaryPresentations)
+			entity.HasOne(d => d.PrimaryPresentation).WithMany(p => p.RelatedPresentations)
 							.HasForeignKey(d => d.PrimaryPresentationId)
 							.OnDelete(DeleteBehavior.ClientSetNull)
 							.HasConstraintName("fkPresentationRelated_PresentationId");

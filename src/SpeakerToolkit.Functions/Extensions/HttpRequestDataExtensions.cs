@@ -169,6 +169,9 @@ public static class HttpRequestDataExtensions
 	public static int GetInt32QueryStringValue(this HttpRequestData httpRequestData, string key, int defaultValue = 0)
 		=> int.TryParse(httpRequestData.GetQueryStringValue(key), out int result) ? result : defaultValue;
 
+	public static int? GetNullableInt32QueryStringValue(this HttpRequestData httpRequestData, string key, int? defaultValue = null)
+		=> int.TryParse(httpRequestData.GetQueryStringValue(key), out int result) ? result : defaultValue;
+
 	public static async Task<T?> GetRequestParameters2Async<T>(this HttpRequestData httpRequestData, Dictionary<string, string> routeValues, JsonSerializerOptions jsonSerializerOptions) where T : new()
 	{
 
@@ -272,6 +275,11 @@ public static class HttpRequestDataExtensions
 	public static HttpResponseData CreateOkResponse(this HttpRequestData httpRequestData, string? bodyText = null)
 	{
 		return httpRequestData.CreateResponse(HttpStatusCode.OK, bodyText ?? string.Empty);
+	}
+
+	public static HttpResponseData CreateNotFoundResponse(this HttpRequestData httpRequestData, Exception exception)
+	{
+		return httpRequestData.CreateResponse(HttpStatusCode.NotFound, exception.Message);
 	}
 
 }

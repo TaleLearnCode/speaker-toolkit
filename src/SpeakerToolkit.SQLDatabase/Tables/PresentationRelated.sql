@@ -13,7 +13,7 @@ GO
 
 EXEC sp_addextendedproperty @level0name=N'dbo', @level1name=N'PresentationRelated',                                                             @value=N'Links two related presentations togethers.',                                                                               @name=N'MS_Description', @level0type=N'SCHEMA', @level1type=N'TABLE';
 GO
-EXEC sp_addextendedproperty @level0name=N'dbo', @level1name=N'PresentationRelated', @level2name=N'PresentationRelatedId',                       @value=N'The identifier of the releated presentation object.',                                                                      @name=N'MS_Description', @level0type=N'SCHEMA', @level1type=N'TABLE', @level2type=N'COLUMN';
+EXEC sp_addextendedproperty @level0name=N'dbo', @level1name=N'PresentationRelated', @level2name=N'PresentationRelatedId',                       @value=N'The identifier of the related presentation object.',                                                                      @name=N'MS_Description', @level0type=N'SCHEMA', @level1type=N'TABLE', @level2type=N'COLUMN';
 GO
 EXEC sp_addextendedproperty @level0name=N'dbo', @level1name=N'PresentationRelated', @level2name=N'PrimaryPresentationId',                       @value=N'The identifier of the primary presentation.',                                                                              @name=N'MS_Description', @level0type=N'SCHEMA', @level1type=N'TABLE', @level2type=N'COLUMN';
 GO

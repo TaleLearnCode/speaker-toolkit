@@ -17,12 +17,27 @@ internal static class PresentationExtensions
 		return presentation.PresentationTexts.FirstOrDefault()?.PresentationTitle ?? string.Empty;
 	}
 
-	internal static PresentationTagsResponse ToPresentationTagsResponse(this Presentation presentation)
+	internal static PresentationTagsResponse ToPresentationTagsResponse(this Presentation presentation, string? languageCode = null)
 		=> new()
 		{
 			PresentationId = presentation.PresentationId,
-			PresentationTitle = presentation.PresentationTitle(),
+			PresentationTitle = presentation.PresentationTitle(languageCode),
 			PresentationTags = presentation.PresentationTags.Select(x => x.Tag.TagName)
+		};
+
+	internal static PresentationListItemResponse ToPresentationListItemResponse(this Presentation presentation, string? languageCode = null)
+		=> new()
+		{
+			Id = presentation.PresentationId,
+			Title = presentation.PresentationTitle(languageCode)
+		};
+
+	internal static RelatedPresentationsResponse ToRelatedPresentationsResponse(this Presentation presentation, string? languageCode = null)
+		=> new()
+		{
+			PresentationId = presentation.PresentationId,
+			PresentationTitle = presentation.PresentationTitle(languageCode),
+			RelatedPresentations = presentation.RelatedPresentations.OrderBy(x => x.SortOrder).Select(x => x.RelatedPresentation.ToPresentationListItemResponse(languageCode)).ToList()
 		};
 
 }

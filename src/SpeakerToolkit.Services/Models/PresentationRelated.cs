@@ -11,7 +11,7 @@ namespace TaleLearnCode.SpeakerToolkit.Models;
 public partial class PresentationRelated
 {
     /// <summary>
-    /// The identifier of the releated presentation object.
+    /// The identifier of the related presentation object.
     /// </summary>
     public int PresentationRelatedId { get; set; }
 

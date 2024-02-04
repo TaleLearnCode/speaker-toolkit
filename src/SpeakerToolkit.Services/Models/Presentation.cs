@@ -45,7 +45,7 @@ public partial class Presentation
 
 	public virtual ICollection<LearningObjective> LearningObjectives { get; set; } = new List<LearningObjective>();
 
-	public virtual ICollection<PresentationRelated> PresentationRelatedPrimaryPresentations { get; set; } = new List<PresentationRelated>();
+	public virtual ICollection<PresentationRelated> RelatedPresentations { get; set; } = new List<PresentationRelated>();
 
 	public virtual ICollection<PresentationRelated> PresentationRelatedRelatedPresentations { get; set; } = new List<PresentationRelated>();
 
