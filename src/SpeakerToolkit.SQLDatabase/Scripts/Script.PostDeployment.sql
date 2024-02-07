@@ -17,6 +17,8 @@
 :r .\Populate\Populate_PresentationTag.sql
 :r .\Populate\Populate_PresentationRelated.sql
 :r .\Populate\Populate_LearningObjective.sql
+:r .\Populate\Populate_PresentationSpeaker.sql
+
 :r .\Populate\Populate_EngagementStatus.sql
 :r .\Populate\Populate_EngagementType.sql
 :r .\Populate\Populate_Engagement.sql

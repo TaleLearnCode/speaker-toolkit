@@ -4,18 +4,9 @@ internal static class PresentationExtensions
 {
 
 	internal static string PresentationTitle(this Presentation presentation, string? languageCode = null)
-	{
-		if (languageCode is not null)
-		{
-			PresentationText? presentationText = presentation.PresentationTexts.FirstOrDefault(x => x.LanguageCode == languageCode);
-			if (presentationText is not null)
-				return presentationText.PresentationTitle;
-		}
-		PresentationText? defaultPresentationText = presentation.PresentationTexts.FirstOrDefault(x => x.LanguageCode == presentation.DefaultLanguageCode);
-		if (defaultPresentationText is not null)
-			return defaultPresentationText.PresentationTitle;
-		return presentation.PresentationTexts.FirstOrDefault()?.PresentationTitle ?? string.Empty;
-	}
+		=> presentation.PresentationTexts.FirstOrDefault(x => x.LanguageCode.Equals(languageCode?.ToUpperInvariant(), StringComparison.OrdinalIgnoreCase))?.PresentationTitle
+		?? presentation.PresentationTexts.FirstOrDefault(x => x.LanguageCode.Equals(presentation.DefaultLanguageCode, StringComparison.InvariantCultureIgnoreCase))?.PresentationTitle
+		?? presentation.PresentationTexts.FirstOrDefault()?.PresentationTitle ?? string.Empty;
 
 	internal static PresentationTagsResponse ToPresentationTagsResponse(this Presentation presentation, string? languageCode = null)
 		=> new()
@@ -56,5 +47,15 @@ internal static class PresentationExtensions
 
 	internal static List<PresentationTextResponse> ToPresentationTextResponseList(this ICollection<PresentationText> presentationTexts)
 		=> presentationTexts.Select(x => x.ToPresentationTextResponse()).ToList();
+
+	internal static PresentationSpeakersResponse ToSpeakerList(this Presentation presentation)
+		=> new()
+		{
+			PresentationId = presentation.PresentationId,
+			PresentationTitle = presentation.PresentationTitle(),
+			PrimarySpeaker = presentation.PresentationSpeakers.FirstOrDefault(x => x.IsPrimary == true)?.ToResponse() ?? new PresentationSpeakerResponse(),
+			SecondarySpeakers = presentation.PresentationSpeakers.Where(x => x.IsPrimary == false).Select(x => x.ToResponse()).ToList()
+		};
+
 
 }

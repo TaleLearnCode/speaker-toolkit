@@ -22,4 +22,7 @@ internal static class SpeakerExtensions
 			Awards = (options.GetAwards && speaker.SpeakerAwards.Count != 0) ? speaker.SpeakerAwards.ToResponse().ToList() : null
 		};
 
+	internal static string SpeakerName(this Speaker speaker)
+		=> string.Join(" ", [speaker.FirstName, speaker.LastName]);
+
 }

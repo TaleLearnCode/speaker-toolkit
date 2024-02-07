@@ -233,6 +233,53 @@ public class PresentationServices(ConfigServices configServices) : ServicesBase(
 
 	#endregion
 
+	#region Speakers
+
+	public async Task<PresentationSpeakersResponse> GetSpeakersAsync(int presentationId)
+		=> (await GetPresentationAsync(new() { PresentationId = presentationId, IncludeSpeakers = true }))
+		.ToSpeakerList();
+
+	public async Task AddSpeakerAsync(int presentationId, int speakerId, bool isPrimary)
+	{
+		using SpeakerToolkitContext context = new(_configServices);
+		Presentation presentation = await GetPresentationAsync(new()
+		{ PresentationId = presentationId, IncludeSpeakers = true }, context, nameof(presentationId));
+		Speaker speaker = await context.Speakers.FindAsync(speakerId)
+			?? throw new ArgumentOutOfRangeException(nameof(speakerId), "Speaker not found.");
+		if (presentation.PresentationSpeakers.Any(x => x.SpeakerId == speakerId))
+			throw new ObjectAlreadyExistsException($"Speaker {speakerId} is already associated with presentation {presentationId}.");
+		if (presentation.PresentationSpeakers is null || presentation.PresentationSpeakers.Count == 0)
+		{
+			presentation.PresentationSpeakers = [];
+			isPrimary = true;
+		}
+		else if (isPrimary)
+			foreach (PresentationSpeaker existingSpeaker in presentation.PresentationSpeakers)
+				existingSpeaker.IsPrimary = false;
+		presentation.PresentationSpeakers.Add(new()
+		{
+			PresentationId = presentationId,
+			SpeakerId = speakerId,
+			IsPrimary = isPrimary
+		});
+		await context.SaveChangesAsync();
+	}
+
+	public async Task RemoveSpeakerAsync(int presentationId, int speakerId)
+	{
+		using SpeakerToolkitContext context = new(_configServices);
+		Presentation presentation = await GetPresentationAsync(new()
+		{ PresentationId = presentationId, IncludeSpeakers = true }, context, nameof(presentationId));
+		PresentationSpeaker presentationSpeaker = presentation.PresentationSpeakers.FirstOrDefault(x => x.SpeakerId == speakerId)
+			?? throw new ArgumentOutOfRangeException(nameof(speakerId), "Speaker not associated with presentation.");
+		Speaker speaker = await context.Speakers.FindAsync(speakerId)
+			?? throw new ArgumentOutOfRangeException(nameof(speakerId), "Speaker not found.");
+		context.PresentationSpeakers.Remove(presentationSpeaker);
+		await context.SaveChangesAsync();
+	}
+
+	#endregion
+
 	private async Task<Presentation> GetPresentationAsync(
 		GetPresentationOptions options,
 		string presentationIdParamName = "presentationId")
@@ -267,6 +314,9 @@ public class PresentationServices(ConfigServices configServices) : ServicesBase(
 			query = query.Include(x => x.RelatedPresentations)
 				.ThenInclude(x => x.RelatedPresentation)
 					.ThenInclude(x => x.PresentationTexts);
+		if (options.IncludeSpeakers)
+			query = query.Include(x => x.PresentationSpeakers)
+				.ThenInclude(x => x.Speaker);
 		if (options.PresentationId is not null)
 			query = query.Where(x => x.PresentationId == options.PresentationId);
 		return await query.ToListAsync();
