@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeakerToolkit.Services", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeakerToolkit.Functions", "SpeakerToolkit.Functions\SpeakerToolkit.Functions.csproj", "{DA40A90F-7370-4023-B6D2-2B33D927A9C4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeakerToolkit.CRUDFunctions", "SpeakerToolkit.CRUDFunctions\SpeakerToolkit.CRUDFunctions.csproj", "{5AAF4DE1-C152-45DC-9B84-7B26CFD81B13}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{DA40A90F-7370-4023-B6D2-2B33D927A9C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA40A90F-7370-4023-B6D2-2B33D927A9C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA40A90F-7370-4023-B6D2-2B33D927A9C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AAF4DE1-C152-45DC-9B84-7B26CFD81B13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AAF4DE1-C152-45DC-9B84-7B26CFD81B13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AAF4DE1-C152-45DC-9B84-7B26CFD81B13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AAF4DE1-C152-45DC-9B84-7B26CFD81B13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

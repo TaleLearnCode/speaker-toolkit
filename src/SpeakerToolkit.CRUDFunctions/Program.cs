@@ -1,5 +1,7 @@
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using TaleLearnCode.SpeakerToolkit;
 
@@ -15,15 +17,15 @@ JsonSerializerOptions jsonSerializerOptions = new()
 	WriteIndented = true
 };
 
-IHost host = new HostBuilder()
-	.ConfigureFunctionsWebApplication()
-	.ConfigureServices(services =>
-	{
-		services.AddApplicationInsightsTelemetryWorkerService();
-		services.ConfigureFunctionsApplicationInsights();
-		services.AddSingleton(configServices);
-		services.AddSingleton(jsonSerializerOptions);
-	})
-	.Build();
+var host = new HostBuilder()
+		.ConfigureFunctionsWebApplication()
+		.ConfigureServices(services =>
+		{
+			services.AddApplicationInsightsTelemetryWorkerService();
+			services.ConfigureFunctionsApplicationInsights();
+			services.AddSingleton(configServices);
+			services.AddSingleton(jsonSerializerOptions);
+		})
+		.Build();
 
 host.Run();
