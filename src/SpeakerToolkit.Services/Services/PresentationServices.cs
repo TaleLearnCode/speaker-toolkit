@@ -288,7 +288,7 @@ public class PresentationServices(ConfigServices configServices) : ServicesBase(
 		return await GetPresentationAsync(options, speakerToolkitContext, presentationIdParamName);
 	}
 
-	private static async Task<Presentation> GetPresentationAsync(
+	internal static async Task<Presentation> GetPresentationAsync(
 		GetPresentationOptions options,
 		SpeakerToolkitContext context,
 		string presentationIdParamName = "presentationId")

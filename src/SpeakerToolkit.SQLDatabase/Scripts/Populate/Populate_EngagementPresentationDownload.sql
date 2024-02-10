@@ -28,12 +28,12 @@ USING (VALUES
               ( 16, 16, 'Slides', 'https://github.com/TaleLearnCode/BuildingMicroserviceRESTAPIsUsingAzureFunctions/blob/main/Presentations/Building_Microservice_REST_APIs_Using_Azure_Functions-StirTrek.pdf'),    -- Stir Trek
               ( 17, 17, 'Slides', 'https://github.com/TaleLearnCode/BuildingMicroserviceRESTAPIsUsingAzureFunctions/blob/main/Presentations/Building_Microservice_REST_APIs_Using_Azure_Functions-LouDotNet.pdf'),   -- Louisville .NET Meetup
 
-              -- The Taming of the API
-              ( 18, 18, 'Slides', 'https://github.com/TaleLearnCode/TheTamingOfTheAPI/blob/main/Presentations/TheTamingOfTheAPI_IndyCode.pdf'),                     -- Indy.Code
-              ( 19, 19, 'Slides', 'https://github.com/TaleLearnCode/TheTamingOfTheAPI/blob/main/Presentations/TheTamingOfTheAPI_BeerCityCode.pdf'),                 -- Beer City Code
-              ( 20, 20, 'Slides', 'https://github.com/TaleLearnCode/TheTamingOfTheAPI/blob/main/Presentations/TheTamingOfTheAPI_NebraskaCode.pdf'),                 -- Nebraska.Code()
-              ( 21, 21, 'Slides', 'https://github.com/TaleLearnCode/TheTamingOfTheAPI/blob/main/Presentations/The%20Taming%20of%20the%20API%20-%20DevUp.pdf'),      -- dev up
-              ( 22, 22, 'Slides', 'https://github.com/TaleLearnCode/TheTamingOfTheAPI/blob/main/Presentations/The%20Taming%20of%20the%20API%20-%20CodeStock.pdf'),  -- CodeStock
+              ---- The Taming of the API
+              --( 18, 18, 'Slides', 'https://github.com/TaleLearnCode/TheTamingOfTheAPI/blob/main/Presentations/TheTamingOfTheAPI_IndyCode.pdf'),                     -- Indy.Code
+              --( 19, 19, 'Slides', 'https://github.com/TaleLearnCode/TheTamingOfTheAPI/blob/main/Presentations/TheTamingOfTheAPI_BeerCityCode.pdf'),                 -- Beer City Code
+              --( 20, 20, 'Slides', 'https://github.com/TaleLearnCode/TheTamingOfTheAPI/blob/main/Presentations/TheTamingOfTheAPI_NebraskaCode.pdf'),                 -- Nebraska.Code()
+              --( 21, 21, 'Slides', 'https://github.com/TaleLearnCode/TheTamingOfTheAPI/blob/main/Presentations/The%20Taming%20of%20the%20API%20-%20DevUp.pdf'),      -- dev up
+              --( 22, 22, 'Slides', 'https://github.com/TaleLearnCode/TheTamingOfTheAPI/blob/main/Presentations/The%20Taming%20of%20the%20API%20-%20CodeStock.pdf'),  -- CodeStock
               
               -- Advanced Serverless Workshop
               ( 23, 23, 'Slides', 'https://github.com/TaleLearnCode/AdvancedServerlessWorkshop/blob/main/Presentations/Advanced%20Serverless%20Workshop%20-%20Azure.pdf'),  -- Serverless Architecture Conference - Berlin

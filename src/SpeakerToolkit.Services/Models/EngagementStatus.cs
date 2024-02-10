@@ -10,15 +10,16 @@ namespace TaleLearnCode.SpeakerToolkit.Models;
 /// </summary>
 public partial class EngagementStatus
 {
-    /// <summary>
-    /// The identifier of the engagement status record.
-    /// </summary>
-    public int EngagementStatusId { get; set; }
+	/// <summary>
+	/// The identifier of the engagement status record.
+	/// </summary>
+	public int EngagementStatusId { get; set; }
 
-    /// <summary>
-    /// The name of the engagement status.
-    /// </summary>
-    public string EngagementStatusName { get; set; }
+	/// <summary>
+	/// The name of the engagement status.
+	/// </summary>
+	public string EngagementStatusName { get; set; }
 
-    public virtual ICollection<Engagement> Engagements { get; set; } = new List<Engagement>();
+	public virtual ICollection<Engagement> Engagements { get; set; } = new List<Engagement>();
+	public virtual ICollection<EngagementPresentation> EngagementPresentations { get; set; } = new List<EngagementPresentation>();
 }

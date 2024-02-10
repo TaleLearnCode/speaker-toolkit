@@ -10,43 +10,50 @@ namespace TaleLearnCode.SpeakerToolkit.Models;
 /// </summary>
 public partial class EngagementPresentation
 {
-    /// <summary>
-    /// Identifier of the EngagementPresentation record.
-    /// </summary>
-    public int EngagementPresentationId { get; set; }
+	/// <summary>
+	/// Identifier of the EngagementPresentation record.
+	/// </summary>
+	public int EngagementPresentationId { get; set; }
 
-    /// <summary>
-    /// Identifier of the associated engagement.
-    /// </summary>
-    public int EngagementId { get; set; }
+	/// <summary>
+	/// Identifier of the associated engagement.
+	/// </summary>
+	public int EngagementId { get; set; }
 
-    /// <summary>
-    /// Identifier of the associated presentation.
-    /// </summary>
-    public int PresentationId { get; set; }
+	/// <summary>
+	/// Identifier of the associated presentation.
+	/// </summary>
+	public int PresentationId { get; set; }
 
-    /// <summary>
-    /// The starting date and time for the presentation.
-    /// </summary>
-    public DateTime? StartDateTime { get; set; }
+	/// <summary>
+	/// Identifier of the status for the engagement presentation.
+	/// </summary>
+	public int StatusId { get; set; }
 
-    /// <summary>
-    /// The ending date and time for the presentation.
-    /// </summary>
-    public DateTime? EndDateTime { get; set; }
+	/// <summary>
+	/// The starting date and time for the presentation.
+	/// </summary>
+	public DateTime? StartDateTime { get; set; }
 
-    public string TimeZone { get; set; }
+	/// <summary>
+	/// The ending date and time for the presentation.
+	/// </summary>
+	public DateTime? EndDateTime { get; set; }
 
-    /// <summary>
-    /// The room where the presentation is being presented.
-    /// </summary>
-    public string Room { get; set; }
+	public string TimeZone { get; set; }
 
-    public virtual Engagement Engagement { get; set; }
+	/// <summary>
+	/// The room where the presentation is being presented.
+	/// </summary>
+	public string Room { get; set; }
 
-    public virtual ICollection<EngagementPresentationDownload> EngagementPresentationDownloads { get; set; } = new List<EngagementPresentationDownload>();
+	public virtual Engagement Engagement { get; set; }
 
-    public virtual ICollection<EngagementPresentationSpeaker> EngagementPresentationSpeakers { get; set; } = new List<EngagementPresentationSpeaker>();
+	public virtual EngagementStatus Status { get; set; }
 
-    public virtual Presentation Presentation { get; set; }
+	public virtual ICollection<EngagementPresentationDownload> EngagementPresentationDownloads { get; set; } = new List<EngagementPresentationDownload>();
+
+	public virtual ICollection<EngagementPresentationSpeaker> EngagementPresentationSpeakers { get; set; } = new List<EngagementPresentationSpeaker>();
+
+	public virtual Presentation Presentation { get; set; }
 }

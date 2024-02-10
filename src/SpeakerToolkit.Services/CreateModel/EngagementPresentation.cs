@@ -31,6 +31,12 @@ internal static partial class CreateModel
 							.HasForeignKey(d => d.PresentationId)
 							.OnDelete(DeleteBehavior.ClientSetNull)
 							.HasConstraintName("fkEngagementPresentation_Presentation");
+
+			entity.HasOne(d => d.Status).WithMany(p => p.EngagementPresentations)
+							.HasForeignKey(d => d.StatusId)
+							.OnDelete(DeleteBehavior.ClientSetNull)
+							.HasConstraintName("fkEngagementPresentation_EngagementStatus");
+
 		});
 
 	}
