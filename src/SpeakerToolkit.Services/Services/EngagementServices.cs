@@ -42,7 +42,7 @@ public class EngagementServices(ConfigServices configServices) : ServicesBase(co
 		if (request.EngagementId != engagementId) throw new ArgumentException("Engagement ID does not match request.", nameof(engagementId));
 		SpeakerToolkitContext context = new(_configServices);
 		Engagement engagement = await GetEngagementDataAsync(context, engagementId);
-		Presentation presentation = (await PresentationServices.GetPresentationAsync(new() { PresentationId = presentationId }, context));
+		Presentation presentation = (await PresentationServices.GetDataAsync(new() { PresentationId = presentationId }, context));
 		EngagementStatus engagementStatus = await context.EngagementStatuses.FirstOrDefaultAsync(es => es.EngagementStatusId == request.StatusId) ?? throw new ArgumentOutOfRangeException(nameof(request), "Status not found.");
 		if (engagement.EngagementPresentations.Any(ep => ep.PresentationId == presentationId))
 			throw new ObjectAlreadyExistsException("Presentation already added to engagement.");
@@ -64,7 +64,7 @@ public class EngagementServices(ConfigServices configServices) : ServicesBase(co
 		if (request.EngagementId != engagementId) throw new ArgumentException("Engagement ID does not match request.", nameof(engagementId));
 		SpeakerToolkitContext context = new(_configServices);
 		Engagement engagement = await GetEngagementDataAsync(context, engagementId);
-		Presentation presentation = await PresentationServices.GetPresentationAsync(new() { PresentationId = presentationId }, context);
+		Presentation presentation = await PresentationServices.GetDataAsync(new() { PresentationId = presentationId }, context);
 		EngagementStatus engagementStatus = await context.EngagementStatuses.FirstOrDefaultAsync(es => es.EngagementStatusId == request.StatusId) ?? throw new ArgumentOutOfRangeException(nameof(request), "Status not found.");
 		EngagementPresentation engagementPresentation = engagement.EngagementPresentations.FirstOrDefault(ep => ep.PresentationId == presentationId) ?? throw new ArgumentOutOfRangeException(nameof(request), "Presentation not found in engagement.");
 		engagementPresentation.StatusId = request.StatusId;

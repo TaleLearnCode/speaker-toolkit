@@ -6,4 +6,5 @@ public class GetPresentationOptions
 	public bool IncludePresentationTexts { get; set; } = true;
 	public bool IncludeRelatedPresentations { get; set; } = false;
 	public bool IncludeSpeakers { get; set; } = false;
+	public bool IncludeTags { get; set; } = false;
 }
