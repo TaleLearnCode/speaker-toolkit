@@ -10,4 +10,5 @@ public class EngagementPresentationRequest
 	public string TimeZone { get; set; } = null!;
 	public string? Room { get; set; }
 	public List<EngagementPresentationSpeakerRequest> Speakers { get; set; } = [];
+	public List<EngagementPresentationDownloadRequest>? Downloads { get; set; }
 }

@@ -21,7 +21,8 @@ internal static class EngagementPresentationExtensions
 			EndDateTime = engagementPresentation.EndDateTime,
 			TimeZone = engagementPresentation.TimeZone,
 			Room = engagementPresentation.Room,
-			Speakers = engagementPresentation.EngagementPresentationSpeakers.ToSpeakerList()
+			Speakers = engagementPresentation.EngagementPresentationSpeakers.ToSpeakerList(),
+			Downloads = engagementPresentation.EngagementPresentationDownloads.ToResponse()
 		};
 	}
 
@@ -43,5 +44,16 @@ internal static class EngagementPresentationExtensions
 			Name = engagementPresentationSpeaker.Speaker.FullName,
 			IsPrimary = engagementPresentationSpeaker.IsPrimarySpeaker
 		};
+
+	internal static EngagementPresentationDownloadResponse ToResponse(this EngagementPresentationDownload engagementPresentationDownload)
+		=> new()
+		{
+			Id = engagementPresentationDownload.EngagementPresentationDownloadId,
+			DownloadName = engagementPresentationDownload.DownloadName,
+			DownloadUrl = engagementPresentationDownload.DownloadUrl
+		};
+
+	internal static List<EngagementPresentationDownloadResponse> ToResponse(this IEnumerable<EngagementPresentationDownload> engagementPresentationDownloads)
+		=> engagementPresentationDownloads.Select(engagementPresentationDownload => engagementPresentationDownload.ToResponse()).ToList();
 
 }

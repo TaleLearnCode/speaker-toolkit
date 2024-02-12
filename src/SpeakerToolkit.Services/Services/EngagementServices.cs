@@ -71,6 +71,18 @@ public class EngagementServices(ConfigServices configServices) : ServicesBase(co
 
 		engagement.EngagementPresentations.Add(engagementPresentation);
 
+		if (request.Downloads != null)
+		{
+			foreach (EngagementPresentationDownloadRequest download in request.Downloads)
+			{
+				engagementPresentation.EngagementPresentationDownloads.Add(new()
+				{
+					DownloadName = download.DownloadName,
+					DownloadUrl = download.DownloadUrl
+				});
+			}
+		}
+
 		await context.SaveChangesAsync();
 	}
 
@@ -112,6 +124,8 @@ public class EngagementServices(ConfigServices configServices) : ServicesBase(co
 
 		await UpdatePresentationSpeakersAsync(request, context, engagementPresentation);
 
+		await UpdatePresentationDownloadsAsync(request, context, engagementPresentation);
+
 		engagementPresentation.StatusId = request.StatusId;
 		engagementPresentation.StartDateTime = request.StartDateTime;
 		engagementPresentation.EndDateTime = request.EndDateTime;
@@ -119,6 +133,42 @@ public class EngagementServices(ConfigServices configServices) : ServicesBase(co
 		engagementPresentation.Room = request.Room;
 		await context.SaveChangesAsync();
 
+	}
+
+	private async Task UpdatePresentationDownloadsAsync(EngagementPresentationRequest request, SpeakerToolkitContext context, EngagementPresentation engagementPresentation)
+	{
+		if (request.Downloads is not null)
+		{
+			IEnumerable<EngagementPresentationDownload> removedDownloads = engagementPresentation.EngagementPresentationDownloads.Where(ed => !request.Downloads.Any(d => d.DownloadName == ed.DownloadName && d.DownloadUrl == ed.DownloadUrl));
+			if (removedDownloads.Any())
+			{
+				foreach (EngagementPresentationDownload removedDownload in removedDownloads)
+					context.EngagementPresentationDownloads.Remove(removedDownload);
+				await context.SaveChangesAsync();
+			}
+
+			IEnumerable<EngagementPresentationDownloadRequest> addedDownloads = request.Downloads
+				.Where(d => !(engagementPresentation.EngagementPresentationDownloads.Select(x => x.DownloadName).ToList()).Contains(d.DownloadName));
+			if (addedDownloads.Any())
+			{
+				foreach (EngagementPresentationDownloadRequest addedDownload in addedDownloads)
+					engagementPresentation.EngagementPresentationDownloads.Add(new()
+					{
+						DownloadName = addedDownload.DownloadName,
+						DownloadUrl = addedDownload.DownloadUrl
+					});
+				await context.SaveChangesAsync();
+			}
+		}
+		else
+		{
+			if (engagementPresentation.EngagementPresentationDownloads.Count != 0)
+			{
+				foreach (EngagementPresentationDownload download in engagementPresentation.EngagementPresentationDownloads)
+					context.EngagementPresentationDownloads.Remove(download);
+				await context.SaveChangesAsync();
+			}
+		}
 	}
 
 	private static async Task UpdatePresentationSpeakersAsync(EngagementPresentationRequest request, SpeakerToolkitContext context, EngagementPresentation engagementPresentation)
@@ -168,6 +218,7 @@ public class EngagementServices(ConfigServices configServices) : ServicesBase(co
 				.ThenInclude(p => p.PresentationTexts)
 			.Include(x => x.EngagementPresentationSpeakers)
 				.ThenInclude(x => x.Speaker)
+			.Include(x => x.EngagementPresentationDownloads)
 			.Include(ep => ep.Status)
 			.Where(ep => ep.EngagementId == engagementId);
 		if (presentationId.HasValue)
@@ -177,7 +228,7 @@ public class EngagementServices(ConfigServices configServices) : ServicesBase(co
 
 	#endregion
 
-	#region Engagement Presentation Speaker
+	#region Engagement Presentation Speakers
 
 	public async Task<List<PresentationSpeakerListItemResponse>> GetEngagementPresentationSpeakers(int engagementId, int presentationId)
 	{
@@ -265,6 +316,83 @@ public class EngagementServices(ConfigServices configServices) : ServicesBase(co
 
 		EngagementPresentationSpeaker engagementPresentationSpeaker = engagementPresentation.EngagementPresentationSpeakers.First(x => x.SpeakerId == speakerId);
 		engagementPresentation.EngagementPresentationSpeakers.Remove(engagementPresentationSpeaker);
+		await context.SaveChangesAsync();
+
+	}
+
+	#endregion
+
+	#region Engagement Presentation Downloads
+
+	public async Task<List<EngagementPresentationDownloadResponse>> GetEngagementPresentationDownloads(int engagementId, int presentationId)
+	{
+		using SpeakerToolkitContext context = new(_configServices);
+		EngagementPresentation engagementPresentation = await context.EngagementPresentations
+			.Include(x => x.EngagementPresentationDownloads)
+			.FirstOrDefaultAsync(x => x.EngagementId == engagementId && x.PresentationId == presentationId)
+			?? throw new ArgumentOutOfRangeException(nameof(engagementId), "Unable to find the engagement or presentation.");
+		return engagementPresentation.EngagementPresentationDownloads.ToResponse();
+	}
+
+	public async Task<EngagementPresentationDownloadResponse> GetEngagementPresentationDownloadAsync(int engagementId, int presentationId, int downloadId)
+	{
+		using SpeakerToolkitContext context = new(_configServices);
+		EngagementPresentation engagementPresentation = await context.EngagementPresentations
+			.Include(x => x.EngagementPresentationDownloads)
+			.FirstOrDefaultAsync(x => x.EngagementId == engagementId && x.PresentationId == presentationId)
+			?? throw new ArgumentOutOfRangeException(nameof(engagementId), "Unable to find the engagement or presentation.");
+		EngagementPresentationDownload engagementPresentationDownload = engagementPresentation.EngagementPresentationDownloads.FirstOrDefault(x => x.EngagementPresentationDownloadId == downloadId)
+			?? throw new ArgumentOutOfRangeException(nameof(downloadId), "Download not found in presentation.");
+		return engagementPresentationDownload.ToResponse();
+	}
+
+	public async Task<int> AddDownloadToEngagementPresentationAsync(int engagementId, int presentationId, EngagementPresentationDownloadRequest request)
+	{
+
+		SpeakerToolkitContext context = new(_configServices);
+
+		Engagement engagement = await context.Engagements
+			.Include(x => x.EngagementPresentations)
+				.ThenInclude(x => x.EngagementPresentationDownloads)
+			.FirstOrDefaultAsync(x => x.EngagementId == engagementId)
+			?? throw new ArgumentOutOfRangeException(nameof(engagementId), "Engagement not found.");
+
+		EngagementPresentation engagementPresentation = engagement.EngagementPresentations.FirstOrDefault(ep => ep.PresentationId == presentationId)
+			?? throw new ArgumentOutOfRangeException(nameof(presentationId), "Presentation not found in engagement.");
+
+		if (engagementPresentation.EngagementPresentationDownloads.Any(x => x.DownloadName == request.DownloadName && x.DownloadUrl == request.DownloadUrl))
+			throw new ObjectAlreadyExistsException("Download already added to presentation.");
+
+		EngagementPresentationDownload engagementPresentationDownload = new()
+		{
+			DownloadName = request.DownloadName,
+			DownloadUrl = request.DownloadUrl
+		};
+		engagementPresentation.EngagementPresentationDownloads.Add(engagementPresentationDownload);
+		await context.SaveChangesAsync();
+
+		return engagementPresentationDownload.EngagementPresentationDownloadId;
+
+	}
+
+	public async Task RemoveDownloadFromEngagementPresentationAsync(int engagementId, int presentationId, int downloadId)
+	{
+
+		SpeakerToolkitContext context = new(_configServices);
+
+		Engagement engagement = await context.Engagements
+			.Include(x => x.EngagementPresentations)
+				.ThenInclude(x => x.EngagementPresentationDownloads)
+			.FirstOrDefaultAsync(x => x.EngagementId == engagementId)
+			?? throw new ArgumentOutOfRangeException(nameof(engagementId), "Engagement not found.");
+
+		EngagementPresentation engagementPresentation = engagement.EngagementPresentations.FirstOrDefault(ep => ep.PresentationId == presentationId)
+			?? throw new ArgumentOutOfRangeException(nameof(presentationId), "Presentation not found in engagement.");
+
+		EngagementPresentationDownload engagementPresentationDownload = engagementPresentation.EngagementPresentationDownloads.FirstOrDefault(x => x.EngagementPresentationDownloadId == downloadId)
+			?? throw new ArgumentOutOfRangeException(nameof(downloadId), "Download not found in presentation.");
+
+		context.EngagementPresentationDownloads.Remove(engagementPresentationDownload);
 		await context.SaveChangesAsync();
 
 	}
