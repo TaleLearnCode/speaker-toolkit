@@ -13,4 +13,5 @@ public class EngagementPresentationResponse
 	public DateTime? EndDateTime { get; set; }
 	public string TimeZone { get; set; } = null!;
 	public string? Room { get; set; }
+	public List<PresentationSpeakerListItemResponse>? Speakers { get; set; }
 }

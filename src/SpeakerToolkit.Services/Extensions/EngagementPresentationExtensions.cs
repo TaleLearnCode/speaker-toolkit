@@ -20,11 +20,28 @@ internal static class EngagementPresentationExtensions
 			StartDateTime = engagementPresentation.StartDateTime,
 			EndDateTime = engagementPresentation.EndDateTime,
 			TimeZone = engagementPresentation.TimeZone,
-			Room = engagementPresentation.Room
+			Room = engagementPresentation.Room,
+			Speakers = engagementPresentation.EngagementPresentationSpeakers.ToSpeakerList()
 		};
 	}
 
 	internal static List<EngagementPresentationResponse> ToResponse(this IEnumerable<EngagementPresentation> engagementPresentations, string? languageCode = null)
 		=> engagementPresentations.Select(engagementPresentation => engagementPresentation.ToResponse(languageCode)).ToList();
+
+	internal static List<PresentationSpeakerListItemResponse> ToSpeakerList(this ICollection<EngagementPresentationSpeaker> engagementPresentationSpeakers)
+	{
+		List<PresentationSpeakerListItemResponse> speakerList = new();
+		foreach (EngagementPresentationSpeaker speaker in engagementPresentationSpeakers)
+			speakerList.Add(speaker.ToSpeakerItem());
+		return speakerList;
+	}
+
+	internal static PresentationSpeakerListItemResponse ToSpeakerItem(this EngagementPresentationSpeaker engagementPresentationSpeaker)
+		=> new()
+		{
+			Id = engagementPresentationSpeaker.SpeakerId,
+			Name = engagementPresentationSpeaker.Speaker.FullName,
+			IsPrimary = engagementPresentationSpeaker.IsPrimarySpeaker
+		};
 
 }

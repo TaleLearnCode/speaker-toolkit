@@ -9,4 +9,5 @@ public class EngagementPresentationRequest
 	public DateTime? EndDateTime { get; set; }
 	public string TimeZone { get; set; } = null!;
 	public string? Room { get; set; }
+	public List<EngagementPresentationSpeakerRequest> Speakers { get; set; } = [];
 }
