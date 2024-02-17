@@ -31,7 +31,7 @@ internal static class EngagementPresentationExtensions
 
 	internal static List<PresentationSpeakerListItemResponse> ToSpeakerList(this ICollection<EngagementPresentationSpeaker> engagementPresentationSpeakers)
 	{
-		List<PresentationSpeakerListItemResponse> speakerList = new();
+		List<PresentationSpeakerListItemResponse> speakerList = [];
 		foreach (EngagementPresentationSpeaker speaker in engagementPresentationSpeakers)
 			speakerList.Add(speaker.ToSpeakerItem());
 		return speakerList;

@@ -5,25 +5,133 @@ public class EngagementServices(ConfigServices configServices) : ServicesBase(co
 
 	#region Engagement
 
-	private async Task<List<Engagement>> GetEngagementList(int engagementId)
+	public async Task<List<EngagementResponse>> GetEngagementsAsync(string? languageCode = null)
+		=> (await GetEngagementList()).ToResponse(languageCode);
+
+	public async Task<EngagementResponse> GetEngagementAsync(int engagementId, string? languageCode = null)
+		=> (await GetEngagementDataAsync(engagementId)).ToResponse(languageCode);
+
+	public async Task<int> CreateEngagementAsync(EngagementRequest request)
+	{
+		SpeakerToolkitContext context = new(_configServices);
+		EngagementType engagementType = await context.EngagementTypes.FirstOrDefaultAsync(et => et.EngagementTypeId == request.EngagementTypeId) ?? throw new ArgumentOutOfRangeException(nameof(request), "Engagement type not found.");
+		EngagementStatus engagementStatus = await context.EngagementStatuses.FirstOrDefaultAsync(es => es.EngagementStatusId == request.EngagementStatusId) ?? throw new ArgumentOutOfRangeException(nameof(request), "Engagement status not found.");
+		Engagement engagement = new()
+		{
+			EngagementTypeId = request.EngagementTypeId,
+			EngagementStatusId = request.EngagementStatusId,
+			EngagementName = request.Name,
+			OverviewLocation = request.OverviewLocation,
+			ListingLocation = request.ListingLocation,
+			StartDate = DateOnly.Parse(request.StartDate),
+			EndDate = DateOnly.Parse(request.EndDate),
+			StartingCost = request.StartingCost,
+			EndingCost = request.EndingCost,
+			EngagementDescription = request.Description,
+			EngagementSummary = request.Summary,
+			EngagementUrl = request.Url,
+			Permalink = request.Permalink
+		};
+		foreach (string tag in request.Tags ?? [])
+		{
+			Tag tagToAdd = await TagServices.GetOrCreateAsync(context, tag);
+			engagement.EngagementTags.Add(new() { Tag = tagToAdd });
+		}
+		context.Engagements.Add(engagement);
+		await context.SaveChangesAsync();
+		return engagement.EngagementId;
+	}
+
+	public async Task UpdateEngagementAsync(int engagementId, EngagementRequest request)
+	{
+
+		SpeakerToolkitContext context = new(_configServices);
+
+		Engagement engagement = await GetEngagementDataAsync(context, engagementId);
+		EngagementType engagementType = await context.EngagementTypes.FirstOrDefaultAsync(et => et.EngagementTypeId == request.EngagementTypeId) ?? throw new ArgumentOutOfRangeException(nameof(request), "Engagement type not found.");
+		EngagementStatus engagementStatus = await context.EngagementStatuses.FirstOrDefaultAsync(es => es.EngagementStatusId == request.EngagementStatusId) ?? throw new ArgumentOutOfRangeException(nameof(request), "Engagement status not found.");
+
+		engagement.EngagementTypeId = request.EngagementTypeId;
+		engagement.EngagementStatusId = request.EngagementStatusId;
+		engagement.EngagementName = request.Name;
+		engagement.OverviewLocation = request.OverviewLocation;
+		engagement.ListingLocation = request.ListingLocation;
+		engagement.StartDate = DateOnly.Parse(request.StartDate);
+		engagement.EndDate = DateOnly.Parse(request.EndDate);
+		engagement.StartingCost = request.StartingCost;
+		engagement.EndingCost = request.EndingCost;
+		engagement.EngagementDescription = request.Description;
+		engagement.EngagementSummary = request.Summary;
+		engagement.EngagementUrl = request.Url;
+		engagement.Permalink = request.Permalink;
+		await context.SaveChangesAsync();
+
+		if (request.Tags is not null)
+		{
+			foreach (var tag in engagement.EngagementTags)
+				if (!request.Tags.Contains(tag.Tag.TagName))
+					context.EngagementTags.Remove(tag);
+			foreach (string tag in request.Tags ?? [])
+			{
+				Tag tagToAdd = await TagServices.GetOrCreateAsync(context, tag);
+				if (!engagement.EngagementTags.Any(et => et.TagId == tagToAdd.TagId))
+					engagement.EngagementTags.Add(new() { Tag = tagToAdd });
+			}
+			await context.SaveChangesAsync();
+		}
+
+	}
+
+	public async Task DeleteEngagementAsync(int engagementId)
+	{
+		SpeakerToolkitContext context = new(_configServices);
+		Engagement engagement = await GetEngagementDataAsync(context, engagementId);
+		foreach (EngagementPresentation engagementPresentation in engagement.EngagementPresentations)
+		{
+			foreach (EngagementPresentationSpeaker engagementPresentationSpeaker in engagementPresentation.EngagementPresentationSpeakers)
+				context.EngagementPresentationSpeakers.Remove(engagementPresentationSpeaker);
+			foreach (EngagementPresentationDownload engagementPresentationDownload in engagementPresentation.EngagementPresentationDownloads)
+				context.EngagementPresentationDownloads.Remove(engagementPresentationDownload);
+			context.EngagementPresentations.Remove(engagementPresentation);
+		}
+		await context.SaveChangesAsync();
+		foreach (EngagementTag engagementTag in engagement.EngagementTags)
+			context.EngagementTags.Remove(engagementTag);
+		await context.SaveChangesAsync();
+		context.Engagements.Remove(engagement);
+		await context.SaveChangesAsync();
+	}
+
+	private async Task<List<Engagement>> GetEngagementList()
 	{
 		using SpeakerToolkitContext context = new(_configServices);
-		return await GetEngagementList(context, engagementId);
+		return await GetEngagementList(context);
 	}
 
-	private static async Task<List<Engagement>> GetEngagementList(SpeakerToolkitContext context, int engagementId)
+	private static async Task<List<Engagement>> GetEngagementList(SpeakerToolkitContext context, int? engagementId = null)
 	{
-		return await context.Engagements
+		IQueryable<Engagement> query = context.Engagements
+			.Include(x => x.EngagementType)
+			.Include(x => x.EngagementStatus)
+			.Include(x => x.EngagementTags)
+				.ThenInclude(x => x.Tag)
 			.Include(e => e.EngagementPresentations)
 				.ThenInclude(ep => ep.Presentation)
-					.ThenInclude(p => p.PresentationTexts)
-			.Where(e => e.EngagementId == engagementId)
-			.ToListAsync();
+					.ThenInclude(p => p.PresentationTexts);
+		if (engagementId.HasValue)
+			query = query.Where(e => e.EngagementId == engagementId);
+		return await query.ToListAsync();
 	}
 
-	private async Task<Engagement> GetEngagementDataAsync(SpeakerToolkitContext context, int engagementId, string presentationIdParamName = "engagementId")
+	private async Task<Engagement> GetEngagementDataAsync(int engagementId, string presentationIdParamName = "engagementId")
 	{
-		return (await GetEngagementList(context, engagementId)).FirstOrDefault() ?? throw new ArgumentOutOfRangeException(nameof(engagementId), "Engagement not found.");
+		using SpeakerToolkitContext context = new(_configServices);
+		return await GetEngagementDataAsync(context, engagementId, presentationIdParamName);
+	}
+
+	private static async Task<Engagement> GetEngagementDataAsync(SpeakerToolkitContext context, int engagementId, string presentationIdParamName = "engagementId")
+	{
+		return (await GetEngagementList(context, engagementId)).FirstOrDefault() ?? throw new ArgumentOutOfRangeException(presentationIdParamName, "Engagement not found.");
 	}
 
 	#endregion
