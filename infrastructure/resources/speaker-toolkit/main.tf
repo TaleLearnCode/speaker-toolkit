@@ -153,19 +153,19 @@ resource "azurerm_linux_function_app" "funcSpeakerToolkit" {
   location                   = azurerm_resource_group.rgSpeakerToolkit.location
   service_plan_id            = azurerm_service_plan.aspSpeakerToolkit.id
   storage_account_name       = azurerm_storage_account.stSpeakerToolkit.name
-	storage_account_access_key = azurerm_storage_account.stSpeakerToolkit.primary_access_key
+  storage_account_access_key = azurerm_storage_account.stSpeakerToolkit.primary_access_key
   site_config {
-		application_stack {
-			dotnet_version              = "8.0"
-			use_dotnet_isolated_runtime = "true"
-		}
-		application_insights_connection_string = "${azurerm_application_insights.aiSpeakerToolkit.connection_string}"
-		application_insights_key               = "${azurerm_application_insights.aiSpeakerToolkit.instrumentation_key}"
-	}
-	app_settings = {
-		SCM_DO_BUILD_DURING_DEPLOYMENT         = "0"
-		WEBSITE_USE_PLACEHOLDER_DOTNETISOLATED = "1"
-	}
+    application_stack {
+      dotnet_version              = "8.0"
+      use_dotnet_isolated_runtime = "true"
+    }
+    application_insights_connection_string = "${azurerm_application_insights.aiSpeakerToolkit.connection_string}"
+    application_insights_key               = "${azurerm_application_insights.aiSpeakerToolkit.instrumentation_key}"
+  }
+  app_settings = {
+    SCM_DO_BUILD_DURING_DEPLOYMENT         = "0"
+    WEBSITE_USE_PLACEHOLDER_DOTNETISOLATED = "1"
+  }
 }
 
 resource "azurerm_linux_function_app_slot" "funcSpeakerToolkitStaging" {
@@ -173,17 +173,17 @@ resource "azurerm_linux_function_app_slot" "funcSpeakerToolkitStaging" {
   function_app_id      = azurerm_linux_function_app.funcSpeakerToolkit.id
   storage_account_name = azurerm_storage_account.stSpeakerToolkit.name
   site_config {
-		application_stack {
-			dotnet_version              = "8.0"
-			use_dotnet_isolated_runtime = "true"
-		}
-		application_insights_connection_string = "${azurerm_application_insights.aiSpeakerToolkit.connection_string}"
-		application_insights_key               = "${azurerm_application_insights.aiSpeakerToolkit.instrumentation_key}"
-	}
-	app_settings = {
-		SCM_DO_BUILD_DURING_DEPLOYMENT         = "0"
-		WEBSITE_USE_PLACEHOLDER_DOTNETISOLATED = "1"
-	}
+    application_stack {
+      dotnet_version              = "8.0"
+      use_dotnet_isolated_runtime = "true"
+    }
+    application_insights_connection_string = "${azurerm_application_insights.aiSpeakerToolkit.connection_string}"
+    application_insights_key               = "${azurerm_application_insights.aiSpeakerToolkit.instrumentation_key}"
+  }
+  app_settings = {
+    SCM_DO_BUILD_DURING_DEPLOYMENT         = "0"
+    WEBSITE_USE_PLACEHOLDER_DOTNETISOLATED = "1"
+  }
 }
 
 

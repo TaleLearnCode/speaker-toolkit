@@ -26,7 +26,7 @@ resource "azurerm_storage_account" "stRemoteState" {
   location                        = azurerm_resource_group.rgRemoteState.location
   account_tier                    = "Standard"
   account_replication_type        = "LRS"
-	allow_nested_items_to_be_public = false
+  allow_nested_items_to_be_public = false
 
   tags = {
     Product     = module.ResourceTags.resource_tag_product_name
@@ -71,8 +71,8 @@ data "azurerm_storage_account_sas" "sasRemoteState" {
     create  = true
     update  = false
     process = false
-		tag     = false
-		filter  = false
+    tag     = false
+    filter  = false
   }
 }
 
